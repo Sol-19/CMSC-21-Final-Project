@@ -1,4 +1,5 @@
-void printBoard(void);
+#include <stdio.h>
 
+void printBoard();
 
 

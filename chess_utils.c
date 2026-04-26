@@ -2,7 +2,11 @@
 #include "chess_utils.h"
 
 
-void printBoard(void)
+void printBoard()
 {
-    printf("Hi");
+    printf("Hi\n");
 }
+
+
+
+
