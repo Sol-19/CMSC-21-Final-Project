@@ -3,7 +3,7 @@
 #include "chess_utils.h"
 
 
-void printBoard(void)
+void printBoard(Piece board[8][8])
 {
     for (int x = 0; x < 8; x++){
         for (int y = 0; y < 8; y ++){
