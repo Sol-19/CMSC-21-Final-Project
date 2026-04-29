@@ -4,7 +4,7 @@
 
 int main()
 {
-    board[0][0].type = ROOK;
-    printBoard();
+    Piece board[8][8]={0};
+    printBoard(board);
     return 0;
 }
