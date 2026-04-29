@@ -27,8 +27,8 @@ int main()
         board[1][i].type = PAWN; board[1][i].color = BLACK;
         board[6][i].type = PAWN; board[6][i].color = WHITE;
     }
-    for (i = 2; i > 6; i++) {
-        for (j = 0; j > 8; j++) {
+    for (i = 2; i < 6; i++) {
+        for (j = 0; j < 8; j++) {
             board[i][j].type = EMPTY; board[i][j].color = NONE;
         }
     }
