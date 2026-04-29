@@ -5,7 +5,11 @@
 
 void printBoard(void)
 {
-    printf("Hi");
+    for (int x = 0; x < 8; x++){
+        for (int y = 0; y < 8; y ++){
+            printPiece(board[x][y].type, board[x][y].color);
+        }
+    }
 }
 
 void printPiece(PieceType type, Color color) {
