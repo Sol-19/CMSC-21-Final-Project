@@ -7,4 +7,5 @@
         Color color;
         int move_count;
     }Piece;
+    Piece board[8][8];
 #endif
