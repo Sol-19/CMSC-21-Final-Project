@@ -6,5 +6,5 @@
         PieceType type;
         Color color;
         int move_count;
-    }Piece[8][8];
+    }Piece;
 #endif
