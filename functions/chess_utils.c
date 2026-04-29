@@ -12,7 +12,7 @@ void printBoard(Piece board[8][8])
         for (int y = 0; y < 8; y ++){
             printPiece(board[x][y].type, board[x][y].color);
         }
-        printf("\n");
+        printf("\n\n");
     }
 }
 
