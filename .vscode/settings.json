@@ -1,0 +1,6 @@
+{
+    // Edit these two paths if your compiler or debugger are not on PATH.
+    // Example on Windows with MinGW: C:\\MinGW\\bin\\gcc.exe and C:\\MinGW\\bin\\gdb.exe
+    "chess.compilerPath": "C:\\MinGW\\bin\\gcc.exe",
+    "chess.debuggerPath": "C:\\MinGW\\bin\\gdb.exe"
+}
