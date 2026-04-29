@@ -9,9 +9,6 @@ int main()
     Piece board[8][8] = {0};
     setBoard(board);
     printBoard(board);
-
-
-    
     return 0;
 }
 

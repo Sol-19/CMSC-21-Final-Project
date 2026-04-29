@@ -25,15 +25,22 @@ Write-Host "Compiling with: $CompilerPath"
 Write-Host "Source files:"
 $sourceFiles | ForEach-Object { Write-Host "  $_" }
 
-# Ensure we don't accidentally run an old binary: remove existing exe before compiling.
 $exePath = Join-Path $workspaceRoot 'main.exe'
-if (Test-Path $exePath) {
-    Write-Host "Removing existing executable: $exePath"
-    Remove-Item $exePath -Force -ErrorAction SilentlyContinue
-}
 
-# Edit the compiler path in .vscode/settings.json if a full path is required.
-& $CompilerPath -fdiagnostics-color=always -g @sourceFiles -o $exePath
+ $resolvedCompiler = (Get-Command $CompilerPath).Source
+ $compilerDirectory = Split-Path -Parent $resolvedCompiler
+ $previousLocation = Get-Location
+
+try {
+    if (-not [string]::IsNullOrWhiteSpace($compilerDirectory)) {
+        Set-Location $compilerDirectory
+    }
+
+    & $resolvedCompiler -fdiagnostics-color=always -g @sourceFiles -o $exePath
+}
+finally {
+    Set-Location $previousLocation
+}
 
 if (Test-Path $exePath) {
     $info = Get-Item $exePath
