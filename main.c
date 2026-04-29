@@ -5,10 +5,10 @@
 int main()
 {
     Piece board[8][8] = {0};
-    board[0][0].type = 4;
-    board[0][0].color = -1;
-    board[0][1].type = 3;
-    board[0][1].color = -1;
+    board[0][0].type = ROOK;
+    board[0][0].color = BLACK;
+    board[0][1].type = KNIGHT;
+    board[0][1].color = BLACK;
     printBoard(board);
     return 0;
 }
