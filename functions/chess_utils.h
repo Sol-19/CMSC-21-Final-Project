@@ -5,6 +5,7 @@
 
 void printBoard(Piece board[8][8]);
 void printPiece(PieceType type, Color color);
+Move playerMove(Color turn);
 
 #endif
 
