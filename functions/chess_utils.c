@@ -52,6 +52,7 @@ void printPiece(PieceType type, Color color) {
 }
 
 Move playerMove (Color turn)
+
 {
     char move_from[MAX_INPUT], move_to[MAX_INPUT];
     Move move;
