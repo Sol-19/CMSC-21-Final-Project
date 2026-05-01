@@ -16,14 +16,19 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
                 case CASTLE_KINGSIDE:
                     return( 
                     !(board[row][4].move_count) //if king is not moved
-                    && (board[row][7].type == ROOK && board[7][7].color==WHITE)//and its a white rook
-                    && !(board[row][7].move_count) // and not moved
+                    && (board[row][7].type == ROOK && board[7][7].color==WHITE && !(board[row][7].move_count))//and its a white rook and not moved
                     && (board[row][6].type==EMPTY) // and two squares empty
                     && (board[row][5].type==EMPTY) 
                     //add more if not checked when going to the destination
                 );
                 case CASTLE_QUEENSIDE:
-                    return 1;
+                    return (
+                    !(board[row][4].move_count) //if king is not moved
+                    && (board[row][0].type == ROOK && board[7][7].color==WHITE && !(board[row][0].move_count))//and its a white rook and not moved
+                    && (board[row][6].type==EMPTY) // and two squares empty
+                    && (board[row][5].type==EMPTY) 
+                    //add more if not checked when going to the destination
+                    );
         }
         case BLACK:
             switch(move.type){
@@ -35,8 +40,7 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
                 case CASTLE_KINGSIDE:
                     return( 
                     !(board[row][4].move_count) //if king is not moved
-                    && (board[row][7].type == ROOK && board[7][7].color==BLACK)//and its a white rook
-                    && !(board[row][7].move_count) // and not moved
+                    && (board[row][7].type == ROOK && board[7][7].color==BLACK && !(board[row][7].move_count))//and its a black rook and not moved
                     && (board[row][6].type==EMPTY) // and two squares empty
                     && (board[row][5].type==EMPTY) 
                     //add more if not checked when going to the destination

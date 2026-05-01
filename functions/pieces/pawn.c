@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int isLegalPawn (Piece board[8][8], int start_row, int start_col, int end_row, int end_col) {
+int isLegalPawn (Piece board[8][8], int start_row, int start_col, int end_row, int end_col) {//refactor to use the move struct
     Piece piece = board[start_row][start_col];
     Piece destination = board[end_row][end_col];
 
