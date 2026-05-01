@@ -4,6 +4,7 @@
 
 int isLegalKing(Piece board[8][8], Move move, Color turn)
 {
+    int row = turn == WHITE?7:0;
     switch(turn){
         case WHITE:
             switch(move.type){
@@ -14,11 +15,11 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
                     return (row_diff <= 1 && col_diff <= 1);
                 case CASTLE_KINGSIDE:
                     return( 
-                    !(board[7][4].move_count) //if king is not moved
-                    && (board[7][7].type == ROOK && board[7][7].color==WHITE)//and its a white rook
-                    && !(board[7][7].move_count) // and not moved
-                    && (board[7][6].type==EMPTY) // and two squares empty
-                    && (board[7][5].type==EMPTY) 
+                    !(board[row][4].move_count) //if king is not moved
+                    && (board[row][7].type == ROOK && board[7][7].color==WHITE)//and its a white rook
+                    && !(board[row][7].move_count) // and not moved
+                    && (board[row][6].type==EMPTY) // and two squares empty
+                    && (board[row][5].type==EMPTY) 
                     //add more if not checked when going to the destination
                 );
                 case CASTLE_QUEENSIDE:
