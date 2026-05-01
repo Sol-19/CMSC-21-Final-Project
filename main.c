@@ -21,11 +21,6 @@ int main()
             playermoveturn = playerMove(WHITE);
         }while(!(isLegal(playermoveturn, board, BLACK)));
     }while(1);//change to checkmate later in inplementation
-
-
-
-    
-
     return 0;
 }
 
