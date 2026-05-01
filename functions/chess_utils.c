@@ -69,7 +69,7 @@ Move playerMove (Color turn)
 
 
         // castling special case
-        if (strcmp(piece_from, "O-O-O") == 0 || strcmp(piece_from, "O-O") == 0) {
+        if ((strcmp(piece_from, "O-O-O") == 0) || (strcmp(piece_from, "O-O") == 0)) {
             move.type = (strcmp(piece_from, "O-O") == 0) ? CASTLE_KINGSIDE : CASTLE_QUEENSIDE;
             return move;
         }

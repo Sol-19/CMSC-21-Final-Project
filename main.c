@@ -13,6 +13,7 @@ int main()
     Move playermoveturn;
     setBoard(board);
     printBoard(board);
+    printf("\n");
     //we return true(1) in is legal, that means the move is legal
     do{
         printf("WHITE'S TURN");

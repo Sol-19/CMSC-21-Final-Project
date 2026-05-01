@@ -13,6 +13,7 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
                 // add the logic for if king is incheck here :>
                 return (row_diff <= 1 && col_diff <= 1);
             case CASTLE_KINGSIDE:
+            printf("CASTLE");
                 return( 
                 !(board[row][4].move_count) //if king is not moved
                 && (board[row][7].type == ROOK && board[row][7].color==WHITE && !(board[row][7].move_count))//and its a white rook and not moved
@@ -21,6 +22,7 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
                 //add more if not checked when going to the destination
             );
             case CASTLE_QUEENSIDE:
+            printf("CASTLE");
                 return (
                 !(board[row][4].move_count) //if king is not moved
                 && (board[row][0].type == ROOK && board[row][0].color==WHITE && !(board[row][0].move_count))//and its a white rook and not moved
