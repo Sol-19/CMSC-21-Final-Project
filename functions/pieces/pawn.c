@@ -5,7 +5,6 @@
 
 int isLegalPawn (Piece board[8][8], Move move) {//refactor to use the move struct
     
-    int row_diff = abs(move.to_x - move.from_x);
     int col_diff = abs(move.to_y - move.from_y);
 
     Piece piece = board[move.from_x][move.from_y];
@@ -18,20 +17,20 @@ int isLegalPawn (Piece board[8][8], Move move) {//refactor to use the move struc
     int step = (piece.color == WHITE) ? -1 : 1; //white[6][] moves up, black[1][] moves down
 
     if (col_diff == 0) { //if pawn is on the same col
-        if (row_diff == 1) { //if pawn moves one step forward
+        if (move.to_x == move.from_x + step) { //if pawn moves one step forward
             if (destination.type == EMPTY) {
                 return 1; //if the destination is empty, return true
             }   
         }
         if ((piece.color == WHITE && move.from_x == 6) || (piece.color == BLACK && move.from_x == 1)) { //if pawn is not moved yet
-            if (row_diff == 2) { //if user wants to move 2 steps
+            if (move.to_x == move.from_x + step * 2) { //if user wants to move 2 steps
                 if (destination.type == EMPTY && board[move.from_x + step][move.from_y].type == EMPTY) {
                     return 1; //if the next 2 rows are empty, returns true
                 }
             }
         }
     }
-    else if (col_diff == 1 && row_diff == 1) { //if pawn attacks
+    else if (col_diff == 1 && move.to_x == move.from_x + step) { //if pawn attacks
         if (destination.type != EMPTY && destination.color != piece.color) {
             return 1; //if destination is not empty and the opposite color, return true
         }
