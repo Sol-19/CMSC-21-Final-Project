@@ -10,9 +10,17 @@ int main()
     char move_from[100];
     char move_to[100];
     Piece board[8][8] = {0};
+    Move playermoveturn;
     setBoard(board);
     printBoard(board);
-    playerMove(WHITE);
+    do{
+        do{
+            playermoveturn = playerMove(WHITE);
+        }while(!(isLegal(playermoveturn, board, WHITE)));
+        do{
+            playermoveturn = playerMove(WHITE);
+        }while(!(isLegal(playermoveturn, board, BLACK)));
+    }while(1);//change to checkmate later in inplementation
 
 
 
