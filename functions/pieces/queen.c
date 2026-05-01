@@ -1,5 +1,8 @@
 #include "../chess_struct.h"
 #include "../chess_utils.h"
+#include "bishop.h"
+#include "rook.h"
+#include <stdlib.h>
 #include <stdio.h>
 
 int isLegalQueen(Move move, Piece board[8][8])

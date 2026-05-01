@@ -1,5 +1,6 @@
 #include "../chess_struct.h"
 #include "../chess_utils.h"
+#include <stdlib.h>
 #include <stdio.h>
 
 int isLegalBishop(Move move, Piece board[8][8])

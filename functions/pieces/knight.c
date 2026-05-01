@@ -1,6 +1,7 @@
 #include "../chess_struct.h"
 #include "../chess_utils.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int isLegalKnight(Move move)
 {

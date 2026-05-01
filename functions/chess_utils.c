@@ -114,11 +114,11 @@ int isLegal(Move move, Piece board[8][8], Color turn)
     switch (piece_from.type) {
         //case PAWN:  return isLegalPawn(move, board, turn);
     //     case ROOK:   return isLegalRook(move, board);
-    //     case KNIGHT: return isLegalKnight(move,);
+    //     case KNIGHT: return isLegalKnight(move);
     //     case BISHOP: return isLegalBishop(move, board);
     //     case QUEEN:  return isLegalQueen(move, board);
-    //     case KING:   return isLegalKing(move);
-        default: return 1;//checking if turns switch (all moves legal)
+        case KING:   return isLegalKing(board, move, turn);
+        default: return 0;//checking if turns switch (all moves legal)
     }
 }
 
