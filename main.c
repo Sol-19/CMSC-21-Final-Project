@@ -15,9 +15,11 @@ int main()
     printBoard(board);
     //we return true(1) in is legal, that means the move is legal
     do{
+        printf("WHITE'S TURN");
         do{
             playermoveturn = playerMove(WHITE);
         }while(!(isLegal(playermoveturn, board, WHITE)));
+        printf("BLACK'S TURN");
         do{
             playermoveturn = playerMove(BLACK);
         }while(!(isLegal(playermoveturn, board, BLACK)));
