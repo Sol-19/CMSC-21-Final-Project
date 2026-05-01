@@ -71,6 +71,8 @@ Move playerMove (Color turn)
         // castling special case
         if ((strcmp(piece_from, "O-O-O") == 0) || (strcmp(piece_from, "O-O") == 0)) {
             move.type = (strcmp(piece_from, "O-O") == 0) ? CASTLE_KINGSIDE : CASTLE_QUEENSIDE;
+            move.from_y = 4;
+            move.from_x = turn == WHITE? 7 : 0;
             return move;
         }
 
@@ -102,13 +104,13 @@ Move playerMove (Color turn)
 int isLegal(Move move, Piece board[8][8], Color turn)
 {
     Piece piece_from = board[move.from_x][move.from_y];
+    if (move.type == NORMAL){
     Piece piece_to = board[move.to_x][move.to_y];
-
-    // no piece or wrong color
-    if (piece_from.type == EMPTY || piece_from.color != turn) return 0;
-    
     // can't capture ally piece
     if (piece_to.type != EMPTY && piece_to.color == turn) return 0;
+    }
+    // no piece or wrong color
+    if (piece_from.type == EMPTY || piece_from.color != turn) return 0;
 
     //we return 1 for is legal<piece> that means the move is legal
     switch (piece_from.type) {
