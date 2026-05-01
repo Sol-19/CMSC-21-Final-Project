@@ -35,4 +35,15 @@ int isLegalPawn (Piece board[8][8], Move move) {//refactor to use the move struc
             return 1; //if destination is not empty and the opposite color, return true
         }
     }
+    return 0;
+}
+
+void movePawn(Piece board[8][8], Move move) {
+    if (isLegalPawn(board, move)) {//check if move is legal b4 actally moving
+        Piece pawn = board[move.from_x][move.from_y]; //the pawn to move
+        board[move.to_x][move.to_y] = pawn; //will put the pawn to the destination
+        board[move.from_x][move.from_y] = (Piece){.type = EMPTY, .color = NONE}; //resets the previous place to an empty one.\
+    }
+    //will add specifics that i probably forgot or overlooked (pls point out if i did)
+    //will also add the part where pawn turns to queen
 }
