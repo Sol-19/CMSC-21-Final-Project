@@ -97,24 +97,24 @@ Move playerMove (Color turn)
 
 }
 
-int isLegal(Move move, Piece board[8][8], Color turn)
-{
-    Piece piece_from = board[move.from_x][move.from_y];
-    Piece piece_to = board[move.to_x][move.to_y];
+// int isLegal(Move move, Piece board[8][8], Color turn)
+// {
+//     Piece piece_from = board[move.from_x][move.from_y];
+//     Piece piece_to = board[move.to_x][move.to_y];
 
-    // no piece or wrong color
-    if (piece_from.type == EMPTY || piece_from.color != turn) return 0;
+//     // no piece or wrong color
+//     if (piece_from.type == EMPTY || piece_from.color != turn) return 0;
     
-    // can't capture ally piece
-    if (piece_to.type != EMPTY && piece_to.color == turn) return 0;
+//     // can't capture ally piece
+//     if (piece_to.type != EMPTY && piece_to.color == turn) return 0;
 
-    switch (piece_from.type) {
-        case PAWN:   return isLegalPawn(move, board, turn);
-        case ROOK:   return isLegalRook(move, board, turn);
-        case KNIGHT: return isLegalKnight(move, board, turn);
-        case BISHOP: return isLegalBishop(move, board, turn);
-        case QUEEN:  return isLegalQueen(move, board, turn);
-        case KING:   return isLegalKing(move, board, turn);
-        default: return 0;
-    }
-}
+//     switch (piece_from.type) {
+//         case PAWN:   return isLegalPawn(move, board, turn);
+//         case ROOK:   return isLegalRook(move, board, turn);
+//         case KNIGHT: return isLegalKnight(move, board, turn);
+//         case BISHOP: return isLegalBishop(move, board, turn);
+//         case QUEEN:  return isLegalQueen(move, board, turn);
+//         case KING:   return isLegalKing(move, board, turn);
+//         default: return 0;
+//     }
+// }

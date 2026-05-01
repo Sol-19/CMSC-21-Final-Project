@@ -1,8 +1,9 @@
-#include "./chess_struct.h"
-#include "./chess_utils.h"
+#include "../chess_struct.h"
+#include "../chess_utils.h"
 #include <stdio.h>
+#include <stdlib.h>
 
-int isPawnValid (Piece board[8][8], int start_row, int start_col, int end_row, int end_col) {
+int isLegalPawn (Piece board[8][8], int start_row, int start_col, int end_row, int end_col) {
     Piece piece = board[start_row][start_col];
     Piece destination = board[end_row][end_col];
 
