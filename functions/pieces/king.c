@@ -16,7 +16,7 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
                 case CASTLE_KINGSIDE:
                     return( 
                     !(board[row][4].move_count) //if king is not moved
-                    && (board[row][7].type == ROOK && board[7][7].color==WHITE && !(board[row][7].move_count))//and its a white rook and not moved
+                    && (board[row][7].type == ROOK && board[row][7].color==WHITE && !(board[row][7].move_count))//and its a white rook and not moved
                     && (board[row][6].type==EMPTY) // and two squares empty
                     && (board[row][5].type==EMPTY) 
                     //add more if not checked when going to the destination
@@ -24,9 +24,10 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
                 case CASTLE_QUEENSIDE:
                     return (
                     !(board[row][4].move_count) //if king is not moved
-                    && (board[row][0].type == ROOK && board[7][7].color==WHITE && !(board[row][0].move_count))//and its a white rook and not moved
-                    && (board[row][6].type==EMPTY) // and two squares empty
-                    && (board[row][5].type==EMPTY) 
+                    && (board[row][0].type == ROOK && board[row][0].color==WHITE && !(board[row][0].move_count))//and its a white rook and not moved
+                    && (board[row][3].type==EMPTY) // and three squares empty
+                    && (board[row][2].type==EMPTY) 
+                    && (board[row][1].type==EMPTY) 
                     //add more if not checked when going to the destination
                     );
         }
@@ -40,9 +41,10 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
                 case CASTLE_KINGSIDE:
                     return( 
                     !(board[row][4].move_count) //if king is not moved
-                    && (board[row][7].type == ROOK && board[7][7].color==BLACK && !(board[row][7].move_count))//and its a black rook and not moved
-                    && (board[row][6].type==EMPTY) // and two squares empty
-                    && (board[row][5].type==EMPTY) 
+                    && (board[row][0].type == ROOK && board[row][0].color==BLACK && !(board[row][0].move_count))//and its a black rook and not moved
+                    && (board[row][3].type==EMPTY) // and three squares empty
+                    && (board[row][2].type==EMPTY) 
+                    && (board[row][1].type==EMPTY) 
                     //add more if not checked when going to the destination
                 );
                 case CASTLE_QUEENSIDE:
