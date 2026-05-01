@@ -3,31 +3,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int isLegalPawn (Piece board[8][8], int start_row, int start_col, int end_row, int end_col) {//refactor to use the move struct
-    Piece piece = board[start_row][start_col];
-    Piece destination = board[end_row][end_col];
+int isLegalPawn (Piece board[8][8], Move move) {//refactor to use the move struct
+    
+    int row_diff = abs(move.to_x - move.from_x);
+    int col_diff = abs(move.to_y - move.from_y);
+
+    Piece piece = board[move.from_x][move.from_y];
+    Piece destination = board[move.to_x][move.to_y];
 
     if (piece.type != PAWN) {
         return 0; //returns false if not pawn
     }
 
-    int move = (piece.color == WHITE) ? -1 : 1; //white[6][] moves up, black[1][] moves down
+    int step = (piece.color == WHITE) ? -1 : 1; //white[6][] moves up, black[1][] moves down
 
-    if (start_col == end_col) { //if pawn is on the same col
-        if (start_row + move == end_row) { //if pawn moves one step forward
+    if (col_diff == 0) { //if pawn is on the same col
+        if (row_diff == 1) { //if pawn moves one step forward
             if (destination.type == EMPTY) {
                 return 1; //if the destination is empty, return true
             }   
         }
-        if ((piece.color == WHITE && start_row == 6) || (piece.color == BLACK && start_row == 1)) { //if pawn is not moved yet
-            if (start_row + 2*move == end_row) { //if user wants to move 2 steps
-                if (destination.type == EMPTY && board[start_row + move][start_col].type == EMPTY) {
+        if ((piece.color == WHITE && move.from_x == 6) || (piece.color == BLACK && move.from_x == 1)) { //if pawn is not moved yet
+            if (row_diff == 2) { //if user wants to move 2 steps
+                if (destination.type == EMPTY && board[move.from_x + step][move.from_y].type == EMPTY) {
                     return 1; //if the next 2 rows are empty, returns true
                 }
             }
         }
     }
-    else if (abs(start_col - end_col) == 1 && (start_row + move == end_row)) { //if pawn attacks
+    else if (col_diff == 1 && row_diff == 1) { //if pawn attacks
         if (destination.type != EMPTY && destination.color != piece.color) {
             return 1; //if destination is not empty and the opposite color, return true
         }
