@@ -109,7 +109,10 @@ int isLegal(Move move, Piece board[8][8], Color turn)
     if (piece_to.type != EMPTY && piece_to.color == turn) return 0;
 
     if (move.type == CASTLE_KINGSIDE){
-        //castle king
+        //return castle king
+    }
+    else if (move.type == CASTLE_QUEENSIDE){
+        //return castle quueenside
     }
 
     //we return 1 for is legal<piece> that means the move is legal
