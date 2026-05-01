@@ -119,8 +119,7 @@ int isLegal(Move move, Piece board[8][8], Color turn)
     }
 }
 
-
 void applyMove(Move move, Piece board[8][8])
 {
-    
+    // bwas naman
 }
