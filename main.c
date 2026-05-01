@@ -16,14 +16,17 @@ int main()
     printf("\n");
     //we return true(1) in is legal, that means the move is legal
     do{
-        do{
+        while (1) {
             playermoveturn = playerMove(WHITE);
-        }while(!(isLegal(playermoveturn, board, WHITE)));
+            if (isLegal(playermoveturn, board, WHITE)) break;
+            printf("Illegal move, try again.\n");
+        }
         printBoard(board);
-        do{
+        while (1) {
             playermoveturn = playerMove(BLACK);
-        }while(!(isLegal(playermoveturn, board, BLACK)));
-        printBoard(board);
+            if (isLegal(playermoveturn, board, BLACK)) break;
+            printf("Illegal move, try again.\n");
+        }
     }while(1);//change to checkmate later in inplementation
     return 0;
 }
