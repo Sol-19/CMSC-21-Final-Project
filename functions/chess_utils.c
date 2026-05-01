@@ -54,7 +54,7 @@ void printPiece(PieceType type, Color color) {
 Move playerMove (Color turn)
 
 {
-    char move_from[MAX_INPUT], move_to[MAX_INPUT];
+    char piece_from[MAX_INPUT], piece_to[MAX_INPUT];
     Move move;
 
     printf("\n%s's turn\n", turn == WHITE ? "White" : "Black");
@@ -62,33 +62,33 @@ Move playerMove (Color turn)
     while (1)
     {
         printf("Move from (Choose a piece): ");
-        scanf(" %s", move_from);
+        scanf(" %s", piece_from);
         while (getchar() != '\n'); // clears buffer
 
 
         // castling special case
-        if (strcmp(move_from, "O-O-O") == 0 || strcmp(move_from, "O-O") == 0) {
-            move.type = (strcmp(move_from, "O-O") == 0) ? CASTLE_KINGSIDE : CASTLE_QUEENSIDE;
+        if (strcmp(piece_from, "O-O-O") == 0 || strcmp(piece_from, "O-O") == 0) {
+            move.type = (strcmp(piece_from, "O-O") == 0) ? CASTLE_KINGSIDE : CASTLE_QUEENSIDE;
             return move;
         }
 
         printf("To: ");
-        scanf(" %s", move_to);
+        scanf(" %s", piece_to);
         while (getchar() != '\n');
 
-        if (strlen(move_from) != 2 || strlen(move_to) != 2 ||
-        move_from[0] < 'a' || move_from[0] > 'h' || move_from[1] < '1' || move_from[1] > '8' ||
-        move_to[0] < 'a' || move_to[0] > 'h' || move_to[1] < '1' || move_to[1] > '8' ||
-        (move_from[0] == move_to[0] && move_from[1] == move_to[1]))
+        if (strlen(piece_from) != 2 || strlen(piece_to) != 2 ||
+        piece_from[0] < 'a' || piece_from[0] > 'h' || piece_from[1] < '1' || piece_from[1] > '8' ||
+        piece_to[0] < 'a' || piece_to[0] > 'h' || piece_to[1] < '1' || piece_to[1] > '8' ||
+        (piece_from[0] == piece_to[0] && piece_from[1] == piece_to[1]))
         {
             printf("Invalid input, try again.\n");
             continue;
         }
 
-        move.from_x = 8 - (move_from[1] - '0');
-        move.from_y = move_from[0] - 'a';
-        move.to_x   = 8 - (move_to[1] - '0');
-        move.to_y   = move_to[0] - 'a';
+        move.from_x = 8 - (piece_from[1] - '0');
+        move.from_y = piece_from[0] - 'a';
+        move.to_x   = 8 - (piece_to[1] - '0');
+        move.to_y   = piece_to[0] - 'a';
         move.type = NORMAL;
         return move;
 
@@ -99,5 +99,22 @@ Move playerMove (Color turn)
 
 int isLegal(Move move, Piece board[8][8], Color turn)
 {
-    // BWAS NAMAN
+    Piece piece_from = board[move.from_x][move.from_y];
+    Piece piece_to = board[move.to_x][move.to_y];
+
+    // no piece or wrong color
+    if (piece_from.type == EMPTY || piece_from.color != turn) return 0;
+    
+    // can't capture ally piece
+    if (piece_to.type != EMPTY && piece_to.color == turn) return 0;
+
+    switch (piece_from.type) {
+        case PAWN:   return isLegalPawn(move, board, turn);
+        case ROOK:   return isLegalRook(move, board, turn);
+        case KNIGHT: return isLegalKnight(move, board, turn);
+        case BISHOP: return isLegalBishop(move, board, turn);
+        case QUEEN:  return isLegalQueen(move, board, turn);
+        case KING:   return isLegalKing(move, board, turn);
+        default: return 0;
+    }
 }
