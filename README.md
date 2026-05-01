@@ -9,8 +9,9 @@ Use VS Code tasks:
 2. Run task `Run chess` to build and start the program.
 
 Equivalent terminal command:
+Navigate to the chess file directory and run 
 
 ```bash
-D:/msys64/ucrt64/bin/gcc.exe -g main.c functions/chess_struct.c functions/chess_utils.c -o chess.exe
+gcc -g main.c functions/*.c -o main.exe
 ./chess.exe
 ```
