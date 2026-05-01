@@ -2,6 +2,6 @@
 #define KING_H
 #include "../chess_struct.h"
 
-int isLegalKing(Move move);
+int isLegalKing(Piece board[8][8], Move move, Color turn);
 
 #endif

@@ -12,6 +12,6 @@ Equivalent terminal command:
 Navigate to the chess file directory and run 
 
 ```bash
-gcc -g main.c functions/*.c -o main.exe
+gcc -g main.c functions/*.c functions/pieces/*.c -o main.exe
 ./chess.exe
 ```

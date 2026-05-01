@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "chess_struct.h"
 #include "chess_utils.h"
+#include "pieces/pawn.h"
+#include "pieces/king.h"
 #include <string.h>
 #define RED   "\033[31m"
 #define BLUE  "\033[34m"
@@ -108,18 +110,11 @@ int isLegal(Move move, Piece board[8][8], Color turn)
     // can't capture ally piece
     if (piece_to.type != EMPTY && piece_to.color == turn) return 0;
 
-    if (move.type == CASTLE_KINGSIDE){
-        //return castle king
-    }
-    else if (move.type == CASTLE_QUEENSIDE){
-        //return castle quueenside
-    }
-
     //we return 1 for is legal<piece> that means the move is legal
     switch (piece_from.type) {
-            // case PAWN:  return isLegalPawn(move, board, turn);
+        //case PAWN:  return isLegalPawn(move, board, turn);
     //     case ROOK:   return isLegalRook(move, board);
-    //     case KNIGHT: return isLegalKnight(move);
+    //     case KNIGHT: return isLegalKnight(move,);
     //     case BISHOP: return isLegalBishop(move, board);
     //     case QUEEN:  return isLegalQueen(move, board);
     //     case KING:   return isLegalKing(move);
