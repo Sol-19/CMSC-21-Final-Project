@@ -13,12 +13,13 @@ int main()
     Move playermoveturn;
     setBoard(board);
     printBoard(board);
+    //we return true(1) in is legal, that means the move is legal
     do{
         do{
             playermoveturn = playerMove(WHITE);
         }while(!(isLegal(playermoveturn, board, WHITE)));
         do{
-            playermoveturn = playerMove(WHITE);
+            playermoveturn = playerMove(BLACK);
         }while(!(isLegal(playermoveturn, board, BLACK)));
     }while(1);//change to checkmate later in inplementation
     return 0;
