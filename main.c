@@ -19,10 +19,12 @@ int main()
         do{
             playermoveturn = playerMove(WHITE);
         }while(!(isLegal(playermoveturn, board, WHITE)));
+        printBoard(board);
         printf("BLACK'S TURN");
         do{
             playermoveturn = playerMove(BLACK);
         }while(!(isLegal(playermoveturn, board, BLACK)));
+        printBoard(board);
     }while(1);//change to checkmate later in inplementation
     return 0;
 }
