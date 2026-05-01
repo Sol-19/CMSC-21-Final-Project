@@ -7,11 +7,14 @@ int isLegalBishop(Move move, Piece board[8][8])
     int row_diff = abs(move.to_x - move.from_x);
     int col_diff = abs(move.to_y - move.from_y);
 
+    int row_increasing  = (move.to_x > move.from_x);
+    int col_increasing = (move.to_y > move.from_y);
+
     // must be diagonal
     if (row_diff != col_diff) return 0;
 
-    int row_direction = (move.to_x > move.from_x) ? 1 : -1;
-    int col_direction = (move.to_y > move.from_y) ? 1 : -1;
+    int row_direction = row_increasing ? 1 : -1;
+    int col_direction = col_increasing ? 1 : -1;
 
     // starting row and col to check
     int row = move.from_x + row_direction;
