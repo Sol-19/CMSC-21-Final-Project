@@ -15,6 +15,7 @@ int main()
     printBoard(board);
     printf("\n");
     //we return true(1) in is legal, that means the move is legal
+<<<<<<< HEAD
     // do{
     //     while (1) {
     //         playermoveturn = playerMove(WHITE);
@@ -29,6 +30,24 @@ int main()
     //     }
     // }while(1);//change to checkmate later in inplementation
     gameLoop(board);
+=======
+    do{
+        while (1) {
+            playermoveturn = playerMove(WHITE);
+            if (isLegal(playermoveturn, board, WHITE)) break;
+            printf("Illegal move, try again.\n");
+        }
+        applyMove(playermoveturn, board, WHITE);
+        printBoard(board);
+        while (1) {
+            playermoveturn = playerMove(BLACK);
+            if (isLegal(playermoveturn, board, BLACK)) break;
+            printf("Illegal move, try again.\n");
+        }
+        applyMove(playermoveturn, board, BLACK);
+        printBoard(board);
+    }while(1);//change to checkmate later in inplementation
+>>>>>>> e69d4ffa6091e76d2ad21e120869b702442bdaed
     return 0;
 }
 

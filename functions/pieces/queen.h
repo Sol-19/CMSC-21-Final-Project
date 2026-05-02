@@ -4,6 +4,6 @@
 #include "rook.h"
 #include "../chess_struct.h"
 
-int isLegalQueen(Move move, Piece board);
+int isLegalQueen(Move move, Piece board[8][8]);
 
 #endif
