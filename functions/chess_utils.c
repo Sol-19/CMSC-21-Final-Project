@@ -2,6 +2,10 @@
 #include "chess_struct.h"
 #include "chess_utils.h"
 #include "pieces/pawn.h"
+#include "pieces/bishop.h"
+#include "pieces/knight.h"
+#include "pieces/rook.h"
+#include "pieces/queen.h"
 #include "pieces/king.h"
 #include <string.h>
 #define RED   "\033[31m"
@@ -71,11 +75,8 @@ Move playerMove (Color turn)
         // castling special case
         if ((strcmp(piece_from, "O-O-O") == 0) || (strcmp(piece_from, "O-O") == 0)) {
             move.type = (strcmp(piece_from, "O-O") == 0) ? CASTLE_KINGSIDE : CASTLE_QUEENSIDE;
-
-            // gets the coords of the king
             move.from_y = 4;
             move.from_x = turn == WHITE? 7 : 0;
-
             return move;
         }
 
@@ -117,11 +118,11 @@ int isLegal(Move move, Piece board[8][8], Color turn)
 
     //we return 1 for is legal<piece> that means the move is legal
     switch (piece_from.type) {
-        // case PAWN:  return isLegalPawn(move, board, turn);
-    //     case ROOK:   return isLegalRook(move, board);
-    //     case KNIGHT: return isLegalKnight(move);
-    //     case BISHOP: return isLegalBishop(move, board);
-    //     case QUEEN:  return isLegalQueen(move, board);
+        case PAWN:  return isLegalPawn(board, move);
+        case ROOK:   return isLegalRook(move, board);
+        case KNIGHT: return isLegalKnight(move);
+        case BISHOP: return isLegalBishop(move, board);
+        case QUEEN:  return isLegalQueen(move, board);
         case KING:   return isLegalKing(board, move, turn);
         default: return 0;//checking if turns switch (all moves legal)
     }
@@ -165,5 +166,4 @@ void applyMove(Move move, Piece board[8][8], Color turn)
         board[row][0].type = EMPTY; // set the original rook to empty
         board[row][0].color = NONE;
     }
-    
 }

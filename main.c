@@ -21,12 +21,15 @@ int main()
             if (isLegal(playermoveturn, board, WHITE)) break;
             printf("Illegal move, try again.\n");
         }
+        applyMove(playermoveturn, board, WHITE);
         printBoard(board);
         while (1) {
             playermoveturn = playerMove(BLACK);
             if (isLegal(playermoveturn, board, BLACK)) break;
             printf("Illegal move, try again.\n");
         }
+        applyMove(playermoveturn, board, BLACK);
+        printBoard(board);
     }while(1);//change to checkmate later in inplementation
     return 0;
 }
