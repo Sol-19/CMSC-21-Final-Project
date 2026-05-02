@@ -71,8 +71,11 @@ Move playerMove (Color turn)
         // castling special case
         if ((strcmp(piece_from, "O-O-O") == 0) || (strcmp(piece_from, "O-O") == 0)) {
             move.type = (strcmp(piece_from, "O-O") == 0) ? CASTLE_KINGSIDE : CASTLE_QUEENSIDE;
+
+            // gets the coords of the king
             move.from_y = 4;
             move.from_x = turn == WHITE? 7 : 0;
+
             return move;
         }
 
@@ -129,7 +132,11 @@ void applyMove(Move move, Piece board[8][8])
     // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
     Piece piece_from = board[move.from_x][move.from_y];
     Piece piece_to = board[move.to_x][move.to_y];
+
     piece_to = piece_from;
+
+    piece_to.move_count++; //adds move count to the piece
+    
     piece_from.type = EMPTY;
     piece_from.color = NONE;
 }
