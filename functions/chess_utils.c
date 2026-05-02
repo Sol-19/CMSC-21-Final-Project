@@ -117,7 +117,7 @@ int isLegal(Move move, Piece board[8][8], Color turn)
 
     //we return 1 for is legal<piece> that means the move is legal
     switch (piece_from.type) {
-        //case PAWN:  return isLegalPawn(move, board, turn);
+        // case PAWN:  return isLegalPawn(move, board, turn);
     //     case ROOK:   return isLegalRook(move, board);
     //     case KNIGHT: return isLegalKnight(move);
     //     case BISHOP: return isLegalBishop(move, board);
@@ -127,16 +127,43 @@ int isLegal(Move move, Piece board[8][8], Color turn)
     }
 }
 
-void applyMove(Move move, Piece board[8][8])
+void applyMove(Move move, Piece board[8][8], Color turn)
 {
-    // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
-    Piece piece_from = board[move.from_x][move.from_y];
-    Piece piece_to = board[move.to_x][move.to_y];
+    if(move.type == NORMAL)
+    {
+        // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
+        board[move.to_x][move.to_y] = board[move.from_x][move.from_y];
+        board[move.to_x][move.to_y].move_count++;
 
-    piece_to = piece_from;
+        board[move.from_x][move.from_y].type = EMPTY;
+        board[move.from_x][move.from_y].color = NONE;
+    }
+    else if(move.type == CASTLE_KINGSIDE)
+    {
+       int row = turn == WHITE?7:0;
 
-    piece_to.move_count++; //adds move count to the piece
+        board[row][6] = board[row][4]; // switch king to col 6
+        board[row][5]  = board[row][7]; // switch rook to col 5
+
+        board[row][4].type = EMPTY; // set the original king to empty
+        board[row][4].color = NONE;
+
+        board[row][7].type = EMPTY; // set the original rook to empty
+        board[row][7].color = NONE;
+
+    }
+    else if(move.type == CASTLE_QUEENSIDE)
+    {
+        int row = turn == WHITE?7:0;
+
+        board[row][2] = board[row][4]; // switch king to col 2
+        board[row][3]  = board[row][0]; // switch rook to col 3
+
+        board[row][4].type = EMPTY; // set the original king to empty
+        board[row][4].color = NONE;
+
+        board[row][0].type = EMPTY; // set the original rook to empty
+        board[row][0].color = NONE;
+    }
     
-    piece_from.type = EMPTY;
-    piece_from.color = NONE;
 }
