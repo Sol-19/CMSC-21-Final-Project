@@ -126,5 +126,10 @@ int isLegal(Move move, Piece board[8][8], Color turn)
 
 void applyMove(Move move, Piece board[8][8])
 {
-    // bwas naman
+    // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
+    Piece piece_from = board[move.from_x][move.from_y];
+    Piece piece_to = board[move.to_x][move.to_y];
+    piece_to = piece_from;
+    piece_from.type = EMPTY;
+    piece_from.color = NONE;
 }
