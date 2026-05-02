@@ -47,3 +47,4 @@ void movePawn(Piece board[8][8], Move move) {
     //will add specifics that i probably forgot or overlooked (pls point out if i did)
     //will also add the part where pawn turns to queen
 }
+
