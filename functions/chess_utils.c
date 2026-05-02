@@ -3,6 +3,7 @@
 #include "chess_utils.h"
 #include "pieces/pawn.h"
 #include "pieces/king.h"
+#include "pieces/knight.h"
 #include <string.h>
 #define RED   "\033[31m"
 #define BLUE  "\033[34m"
@@ -119,7 +120,7 @@ int isLegal(Move move, Piece board[8][8], Color turn)
     switch (piece.type) {
         // case PAWN:  return isLegalPawn(move, board, turn);
     //     case ROOK:   return isLegalRook(move, board);
-    //     case KNIGHT: return isLegalKnight(move);
+         case KNIGHT: return isLegalKnight(move);
     //     case BISHOP: return isLegalBishop(move, board);
     //     case QUEEN:  return isLegalQueen(move, board);
         case KING:   return isLegalKing(board, move, turn);
@@ -127,7 +128,9 @@ int isLegal(Move move, Piece board[8][8], Color turn)
     }
 }
 
-void applyMove(Move move, Piece board[8][8], Color turn)
+void applyMove(Move move, Piece board[8][8], Color turn) 
+
+
 {
     if(move.type == NORMAL)
     {
@@ -166,4 +169,24 @@ void applyMove(Move move, Piece board[8][8], Color turn)
         board[row][0].color = NONE;
     }
     
+}
+
+void gameLoop(Piece board[8][8])
+{
+    Color turn = WHITE;
+    while(1)
+    {
+        printf("\n");
+        printBoard(board);
+        Move move = playerMove(turn);
+
+        if(!isLegal(move, board, turn))
+        {
+            printf("Illegal move, try again.\n");
+            continue;
+        }
+
+        applyMove(move, board, turn);
+        turn = (turn == WHITE)? BLACK : WHITE;
+    }
 }

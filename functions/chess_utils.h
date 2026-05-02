@@ -8,6 +8,7 @@ void printPiece(PieceType type, Color color);
 Move playerMove(Color turn);
 int isLegal(Move move, Piece board[8][8], Color turn);
 void applyMove(Move move, Piece board[8][8], Color turn);
+void gameLoop(Piece board[8][8]);
 
 #endif
 

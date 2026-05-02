@@ -15,19 +15,20 @@ int main()
     printBoard(board);
     printf("\n");
     //we return true(1) in is legal, that means the move is legal
-    do{
-        while (1) {
-            playermoveturn = playerMove(WHITE);
-            if (isLegal(playermoveturn, board, WHITE)) break;
-            printf("Illegal move, try again.\n");
-        }
-        printBoard(board);
-        while (1) {
-            playermoveturn = playerMove(BLACK);
-            if (isLegal(playermoveturn, board, BLACK)) break;
-            printf("Illegal move, try again.\n");
-        }
-    }while(1);//change to checkmate later in inplementation
+    // do{
+    //     while (1) {
+    //         playermoveturn = playerMove(WHITE);
+    //         if (isLegal(playermoveturn, board, WHITE)) break;
+    //         printf("Illegal move, try again.\n");
+    //     }
+    //     printBoard(board);
+    //     while (1) {
+    //         playermoveturn = playerMove(BLACK);
+    //         if (isLegal(playermoveturn, board, BLACK)) break;
+    //         printf("Illegal move, try again.\n");
+    //     }
+    // }while(1);//change to checkmate later in inplementation
+    gameLoop(board);
     return 0;
 }
 
