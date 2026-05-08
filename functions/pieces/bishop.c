@@ -27,7 +27,7 @@ int isLegalBishop(Move move, Piece board[8][8])
         row += row_direction;
         col += col_direction;
     }
-
+    
     return 1;
 
 }

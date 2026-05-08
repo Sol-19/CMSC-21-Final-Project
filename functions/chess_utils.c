@@ -117,6 +117,8 @@ int isLegal(Move move, Piece board[8][8], Color turn)
     // no piece or wrong color
     if (piece.type == EMPTY || piece.color != turn) return 0;
 
+
+
     //we return 1 for is legal<piece> that means the move is legal
     switch (piece.type) {
         case PAWN:  return isLegalPawn(board, move);
@@ -126,6 +128,22 @@ int isLegal(Move move, Piece board[8][8], Color turn)
         case QUEEN:  return isLegalQueen(move, board);
         case KING:   return isLegalKing(board, move, turn);
         default: return 0;//checking if turns switch (all moves legal)
+    }
+}
+
+void currentBoard(Piece board[8][8], Piece previousBoard[8][8]){
+    for (int x = 0; x<8; x++){
+        for(int y = 0; y<8; y++){
+            previousBoard[x][y] = board[x][y];
+        }
+    }
+}
+
+void revertBoard(Piece board[8][8], Piece previousBoard[8][8]){
+    for (int x = 0; x<8; x++){
+        for(int y = 0; y<8; y++){
+            board[x][y] = previousBoard[x][y];
+        }
     }
 }
 
@@ -147,7 +165,7 @@ void applyMove(Move move, Piece board[8][8], Color turn)
        int row = turn == WHITE?7:0;
 
         board[row][6] = board[row][4]; // switch king to col 6
-        board[row][5]  = board[row][7]; // switch rook to col 5
+        board[row][5] = board[row][7]; // switch rook to col 5
 
         board[row][4].type = EMPTY; // set the original king to empty
         board[row][4].color = NONE;
@@ -171,22 +189,29 @@ void applyMove(Move move, Piece board[8][8], Color turn)
     }
 }
 
-void gameLoop(Piece board[8][8])
+void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
 {
     Color turn = WHITE;
+    Move move;
     while(1)
     {
         printf("\n");
         printBoard(board);
-        Move move = playerMove(turn);
-
+        move = playerMove(turn);
         if(!isLegal(move, board, turn))
         {
             printf("Illegal move, try again.\n");
             continue;
         }
-
+        //
+        currentBoard(board, previousBoard);
         applyMove(move, board, turn);
+
+        //if in check when applied move
+        //revertBoard(board, previousBoard)
+        
+        //
+
         turn = (turn == WHITE)? BLACK : WHITE;
     }
 }
