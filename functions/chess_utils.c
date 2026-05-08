@@ -208,7 +208,7 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         applyMove(move, board, turn);
 
         //if in check when applied move
-        //revertBoard(board, previousBoard)
+        //revertBoard(board, previousBoard);
         
         //
 
