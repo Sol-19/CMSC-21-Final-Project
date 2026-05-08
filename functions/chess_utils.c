@@ -189,6 +189,10 @@ void applyMove(Move move, Piece board[8][8], Color turn)
     }
 }
 
+int isCheck(Move move, Piece board[8][8], Color turn){
+    
+}
+
 void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
 {
     Color turn = WHITE;
