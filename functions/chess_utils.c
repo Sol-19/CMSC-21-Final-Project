@@ -190,6 +190,19 @@ void applyMove(Move move, Piece board[8][8], Color turn)
 }
 
 int isCheck(Move move, Piece board[8][8], Color turn){
+    int king_x = NULL;
+    int king_y = NULL;
+
+    //find king positon
+    for (int x = 0; x<8; x++){
+        for (int y = 0; y<8; y++){
+            if (board[x][y].type == KING && board[x][y].color == turn){
+                king_x = x;
+                king_y = y;
+            }
+        }
+    }
+
     
 }
 
