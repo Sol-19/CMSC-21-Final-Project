@@ -30,3 +30,15 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
                 );
     }
 }
+
+int squareAttacked(int row, int col, Piece board[8][8], Color turn){
+    Move move;
+    Piece simulated_board[8][8];
+    currentBoard(simulated_board, board);
+    simulated_board[row][col].type = KING;
+    simulated_board[row][col].color = turn;
+    if (isCheck(move, simulated_board, turn)){
+        return 1;
+    }
+    return 0;
+}

@@ -194,26 +194,30 @@ void applyMove(Move move, Piece board[8][8], Color turn)
     }
 }
 
-int isCheck(Move move, Piece board[8][8], Color turn){
-    int king_x = -1;
-    int king_y = -1;
+void findKing(Piece board[8][8], Color turn, int *king_x, int *king_y){
     int kingfound = 0;
-
-    //find king positon
     for (int y = 0; y<8; y++){
         for (int x = 0; x<8; x++){
             if (board[y][x].type == KING && board[y][x].color == turn){
-                king_x = x;
-                king_y = y;
+                *king_x = x;
+                *king_y = y;
                 kingfound = 1;
                 break;
             }
         }
         if (kingfound){
-            printf("King found in %d, %d\n", king_x, king_y);
+            printf("King found in %d, %d\n", *king_x, *king_y);
             break;
         }
     }
+}
+
+int isCheck(Move move, Piece board[8][8], Color turn){
+    int king_x;
+    int king_y;
+
+    //find king positon
+    findKing(board, turn, &king_x, &king_y);
 
     //horizontal check
     int directions[4][2] =  {
