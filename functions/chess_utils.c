@@ -213,11 +213,12 @@ void findKing(Piece board[8][8], Color turn, int *king_x, int *king_y){
 }
 
 int isCheck(Piece board[8][8], Color turn){
+
     int king_x, king_y;
     findKing(board, turn, &king_x, &king_y);
 
-    return isCheckRook(board, king_x, king_y, turn)   ||
-           isCheckBishop(board, king_x, king_y, turn) ||
+    return isCheckRook(board, king_x, king_y, turn)   || //checks both rook and queen
+           isCheckBishop(board, king_x, king_y, turn) || // checks both bishop and queen
            isCheckKnight(board, king_x, king_y, turn) ||
            isCheckPawn(board, king_x, king_y, turn)   ||
            isCheckKing(board, king_x, king_y, turn);
