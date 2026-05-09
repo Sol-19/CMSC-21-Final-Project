@@ -210,40 +210,32 @@ int isCheck(Move move, Piece board[8][8], Color turn){
     }
 
     //horizontal check
-    for (int x_left = king_x-1; x_left >= 0; x_left--){
-        if (board[king_y][x_left].type != EMPTY){
-            if ((board[king_y][x_left].type == ROOK || board[king_y][x_left].type == QUEEN ) && (board[king_y][x_left].color != turn)){
-                return 1;
-            }
-            break;
-        }
-    }
-    for (int x_right = king_x+1; x_right < 8; x_right++){
-        if (board[king_y][x_right].type != EMPTY){
-            if ((board[king_y][x_right].type == ROOK || board[king_y][x_right].type == QUEEN ) && (board[king_y][x_right].color != turn)){
-                return 1;
-            }
-            break;
-        }
-    }
+    int directions[4][2] =  {
+        {1,0},{-1,0},{0,1},{0,-1}//y increment index 0 & 1, x increment for index 2 & 3
+    };
+    int row = 0;
+    int col = 0;
+    int rowcheckpos = 0;
+    int colcheckpos = 0;
 
-    //vertical check
-    for (int y_up = king_y-1; y_up >= 0; y_up--){
-        if (board[y_up][king_x].type != EMPTY){
-            if ((board[y_up][king_x].type == ROOK || board[y_up][king_x].type == QUEEN ) && (board[y_up][king_x].color != turn)){
+    for (int d = 0; d < 4; d++){
+        row = directions[d][0]; // get row directions(+-1)
+        col = directions[d][1]; // get col directions(+-1)
+        rowcheckpos = king_y + row;
+        colcheckpos = king_x + col;
+        while(rowcheckpos >= 0 && rowcheckpos < 8 && colcheckpos >= 0  && colcheckpos < 8) //check for bounds 
+        {
+            if (board[rowcheckpos][colcheckpos].type != EMPTY){
+                if ((board[rowcheckpos][colcheckpos].type == ROOK || board[rowcheckpos][colcheckpos].type == QUEEN ) && (board[rowcheckpos][colcheckpos].color != turn)){
                 return 1;
             }
             break;
         }
-    }
-    for (int y_down = king_y+1; y_down < 8; y_down++){
-        if (board[y_down][king_x].type != EMPTY){
-            if ((board[y_down][king_x].type == ROOK || board[y_down][king_x].type == QUEEN ) && (board[y_down][king_x].color != turn)){
-                return 1;
-            }
-            break;
+        rowcheckpos += row;
+        colcheckpos += col;
         }
     }
+ 
 
 
 }
