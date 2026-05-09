@@ -286,6 +286,24 @@ int isCheck(Piece board[8][8], Color turn){
                 }
             }
         }
+    
+    // pawn check
+    int pawn_dir = (turn == WHITE) ? -1 : 1;
+
+    int pawn_attacks[2][2] = {
+        {pawn_dir, -1},{pawn_dir, 1}
+    };
+
+    for (int i = 0; i < 2; i++){
+        rowcheckpos = king_y + pawn_attacks[i][0];
+        colcheckpos = king_x + pawn_attacks[i][1];
+        if (rowcheckpos >= 0 && rowcheckpos < 8 && colcheckpos >= 0 && colcheckpos < 8){
+            if (board[rowcheckpos][colcheckpos].type == PAWN && board[rowcheckpos][colcheckpos].color != turn){
+                printf("King is checked by PAWN\n");
+                return 1;
+            }
+        }
+    }
 
     return 0;
  
