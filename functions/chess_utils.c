@@ -195,9 +195,9 @@ int isCheck(Move move, Piece board[8][8], Color turn){
     int kingfound = 0;
 
     //find king positon
-    for (int x = 0; x<8; x++){
-        for (int y = 0; y<8; y++){
-            if (board[x][y].type == KING && board[x][y].color == turn){
+    for (int y = 0; y<8; y++){
+        for (int x = 0; x<8; x++){
+            if (board[y][x].type == KING && board[y][x].color == turn){
                 king_x = x;
                 king_y = y;
                 kingfound = 1;
@@ -209,7 +209,41 @@ int isCheck(Move move, Piece board[8][8], Color turn){
         }
     }
 
-    //logic for king check
+    //horizontal check
+    for (int x_left = king_x-1; x_left >= 0; x_left--){
+        if (board[king_y][x_left].type != EMPTY){
+            if ((board[king_y][x_left].type == ROOK || board[king_y][x_left].type == QUEEN ) && (board[king_y][x_left].color != turn)){
+                return 1;
+            }
+            break;
+        }
+    }
+    for (int x_right = king_x+1; x_right < 8; x_right++){
+        if (board[king_y][x_right].type != EMPTY){
+            if ((board[king_y][x_right].type == ROOK || board[king_y][x_right].type == QUEEN ) && (board[king_y][x_right].color != turn)){
+                return 1;
+            }
+            break;
+        }
+    }
+
+    //vertical check
+    for (int y_up = king_y-1; y_up >= 0; y_up--){
+        if (board[y_up][king_x].type != EMPTY){
+            if ((board[y_up][king_x].type == ROOK || board[y_up][king_x].type == QUEEN ) && (board[y_up][king_x].color != turn)){
+                return 1;
+            }
+            break;
+        }
+    }
+    for (int y_down = king_y+1; y_down < 8; y_down++){
+        if (board[y_down][king_x].type != EMPTY){
+            if ((board[y_down][king_x].type == ROOK || board[y_down][king_x].type == QUEEN ) && (board[y_down][king_x].color != turn)){
+                return 1;
+            }
+            break;
+        }
+    }
 
 
 }
