@@ -305,6 +305,23 @@ int isCheck(Piece board[8][8], Color turn){
         }
     }
 
+    int king_attacks[8][2] = {
+    {-1,-1},{-1,0},{-1,1},
+    {0,-1},         {0,1},
+    {1,-1}, {1,0},  {1,1}
+    };
+
+    for (int i = 0; i < 8; i++){
+        rowcheckpos = king_y + king_attacks[i][0];
+        colcheckpos = king_x + king_attacks[i][1];
+        if (rowcheckpos >= 0 && rowcheckpos < 8 && colcheckpos >= 0 && colcheckpos < 8){
+            if (board[rowcheckpos][colcheckpos].type == KING && board[rowcheckpos][colcheckpos].color != turn){
+                printf("King is checked by KING\n");
+                return 1;
+            }
+        }
+    }
+
     return 0;
  
 }
