@@ -31,3 +31,35 @@ int isLegalBishop(Move move, Piece board[8][8])
     return 1;
 
 }
+
+int isCheckBishop(Piece board[8][8], int king_x, int king_y, Color turn)
+{
+    int diagonals[4][2] = {
+    {1,1},{1,-1},{-1,1},{-1,-1}
+    };
+
+    int row = 0;
+    int col = 0;
+    int row_check_pos = 0;
+    int col_check_pos = 0;
+
+        for (int d = 0; d < 4; d++){
+            row = diagonals[d][0];
+            col = diagonals[d][1];
+            row_check_pos = king_y + row;
+            col_check_pos = king_x + col;
+            while(row_check_pos >= 0 && row_check_pos < 8 && col_check_pos >= 0 && col_check_pos < 8)
+            {
+                if (board[row_check_pos][col_check_pos].type != EMPTY){
+                    if ((board[row_check_pos][col_check_pos].type == BISHOP || board[row_check_pos][col_check_pos].type == QUEEN) && board[row_check_pos][col_check_pos].color != turn){
+                        printf("King is checked by %d\n", board[row_check_pos][col_check_pos].type);
+                        return 1;
+                    }
+                    break;
+                }
+                row_check_pos += row;
+                col_check_pos += col;
+            }
+    }
+    return 0;
+}

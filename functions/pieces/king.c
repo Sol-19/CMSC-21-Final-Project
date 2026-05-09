@@ -36,6 +36,8 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
 }
 
 int squareAttacked(int row, int col, Piece board[8][8], Color turn){
+
+
     int king_x;
     int king_y;
     Piece simulated_board[8][8] = {0};
@@ -48,4 +50,30 @@ int squareAttacked(int row, int col, Piece board[8][8], Color turn){
         return 1;
     }
     return 0;
+}
+
+int isCheckKing(Piece board[8][8], int king_x, int king_y, Color turn)
+{
+    int king_attacks[8][2] = {
+    {-1,-1},{-1,0},{-1,1},
+    {0,-1},         {0,1},
+    {1,-1}, {1,0},  {1,1}
+    };
+
+    int row_check_pos = 0;
+    int col_check_pos = 0;
+
+    for (int i = 0; i < 8; i++){
+        row_check_pos = king_y + king_attacks[i][0];
+        col_check_pos = king_x + king_attacks[i][1];
+        if (row_check_pos >= 0 && row_check_pos < 8 && col_check_pos >= 0 && col_check_pos < 8){
+            if (board[row_check_pos][col_check_pos].type == KING && board[row_check_pos][col_check_pos].color != turn){
+                printf("King is checked by KING\n");
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+ 
 }

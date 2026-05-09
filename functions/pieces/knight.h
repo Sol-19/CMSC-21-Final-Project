@@ -3,5 +3,6 @@
 #include "../chess_struct.h"
 
 int isLegalKnight(Move move);
+int isCheckRook(Piece board[8][8], int king_x, int king_y, Color turn);
 
 #endif

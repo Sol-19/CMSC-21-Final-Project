@@ -213,117 +213,14 @@ void findKing(Piece board[8][8], Color turn, int *king_x, int *king_y){
 }
 
 int isCheck(Piece board[8][8], Color turn){
-    int king_x;
-    int king_y;
-
-    //find king positon
+    int king_x, king_y;
     findKing(board, turn, &king_x, &king_y);
 
-    //horizontal check
-    int directions[4][2] =  {
-        {1,0},{-1,0},{0,1},{0,-1}//y increment index 0 & 1, x increment for index 2 & 3
-    };
-    int row = 0;
-    int col = 0;
-    int rowcheckpos = 0;
-    int colcheckpos = 0;
-
-    for (int d = 0; d < 4; d++){
-        row = directions[d][0]; // get row directions(+-1)
-        col = directions[d][1]; // get col directions(+-1)
-        rowcheckpos = king_y + row;
-        colcheckpos = king_x + col;
-        while(rowcheckpos >= 0 && rowcheckpos < 8 && colcheckpos >= 0  && colcheckpos < 8) //check for bounds 
-        {
-            if (board[rowcheckpos][colcheckpos].type != EMPTY){
-                if ((board[rowcheckpos][colcheckpos].type == ROOK || board[rowcheckpos][colcheckpos].type == QUEEN ) && (board[rowcheckpos][colcheckpos].color != turn)){
-                    printf("King is checked by %d\n", board[rowcheckpos][colcheckpos].type);
-                return 1;
-            }
-            break;
-        }
-        rowcheckpos += row;
-        colcheckpos += col;
-        }
-    }
-    // diagonal check
-    int diagonals[4][2] = {
-    {1,1},{1,-1},{-1,1},{-1,-1}
-    };
-
-        for (int d = 0; d < 4; d++){
-            row = diagonals[d][0];
-            col = diagonals[d][1];
-            rowcheckpos = king_y + row;
-            colcheckpos = king_x + col;
-            while(rowcheckpos >= 0 && rowcheckpos < 8 && colcheckpos >= 0 && colcheckpos < 8)
-            {
-                if (board[rowcheckpos][colcheckpos].type != EMPTY){
-                    if ((board[rowcheckpos][colcheckpos].type == BISHOP || board[rowcheckpos][colcheckpos].type == QUEEN) && board[rowcheckpos][colcheckpos].color != turn){
-                        printf("King is checked by %d\n", board[rowcheckpos][colcheckpos].type);
-                        return 1;
-                    }
-                    break;
-                }
-                rowcheckpos += row;
-                colcheckpos += col;
-            }
-    }
-
-    // knight check
-    int knight_moves[8][2] = {
-    {-2,-1},{-2,1},{-1,-2},{-1,2},
-    {1,-2},{1,2},{2,-1},{2,1}
-        };
-
-        for (int i = 0; i < 8; i++){
-            rowcheckpos = king_y + knight_moves[i][0];
-            colcheckpos = king_x + knight_moves[i][1];
-            if (rowcheckpos >= 0 && rowcheckpos < 8 && colcheckpos >= 0 && colcheckpos < 8){
-                if (board[rowcheckpos][colcheckpos].type == KNIGHT && board[rowcheckpos][colcheckpos].color != turn){
-                    printf("King is checked by KNIGHT\n");
-                    return 1;
-                }
-            }
-        }
-    
-    // pawn check
-    int pawn_dir = (turn == WHITE) ? -1 : 1;
-
-    int pawn_attacks[2][2] = {
-        {pawn_dir, -1},{pawn_dir, 1}
-    };
-
-    for (int i = 0; i < 2; i++){
-        rowcheckpos = king_y + pawn_attacks[i][0];
-        colcheckpos = king_x + pawn_attacks[i][1];
-        if (rowcheckpos >= 0 && rowcheckpos < 8 && colcheckpos >= 0 && colcheckpos < 8){
-            if (board[rowcheckpos][colcheckpos].type == PAWN && board[rowcheckpos][colcheckpos].color != turn){
-                printf("King is checked by PAWN\n");
-                return 1;
-            }
-        }
-    }
-
-    int king_attacks[8][2] = {
-    {-1,-1},{-1,0},{-1,1},
-    {0,-1},         {0,1},
-    {1,-1}, {1,0},  {1,1}
-    };
-
-    for (int i = 0; i < 8; i++){
-        rowcheckpos = king_y + king_attacks[i][0];
-        colcheckpos = king_x + king_attacks[i][1];
-        if (rowcheckpos >= 0 && rowcheckpos < 8 && colcheckpos >= 0 && colcheckpos < 8){
-            if (board[rowcheckpos][colcheckpos].type == KING && board[rowcheckpos][colcheckpos].color != turn){
-                printf("King is checked by KING\n");
-                return 1;
-            }
-        }
-    }
-
-    return 0;
- 
+    return isCheckRook(board, king_x, king_y, turn)   ||
+           isCheckBishop(board, king_x, king_y, turn) ||
+           isCheckKnight(board, king_x, king_y, turn) ||
+           isCheckPawn(board, king_x, king_y, turn)   ||
+           isCheckKing(board, king_x, king_y, turn);
 }
 
 void gameLoop(Piece board[8][8], Piece previousBoard[8][8])

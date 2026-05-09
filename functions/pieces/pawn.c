@@ -38,3 +38,25 @@ int isLegalPawn (Piece board[8][8], Move move) {//refactor to use the move struc
     return 0;
 }
 
+int isCheckPawn(Piece board[8][8], int king_x, int king_y, Color turn)
+{
+    int pawn_dir = (turn == WHITE) ? -1 : 1;
+    int pawn_attacks[2][2] = {
+        {pawn_dir, -1},{pawn_dir, 1}
+    };
+    int row_check_pos = 0;
+    int col_check_pos = 0;
+
+    for (int i = 0; i < 2; i++){
+        row_check_pos = king_y + pawn_attacks[i][0];
+        col_check_pos = king_x + pawn_attacks[i][1];
+        if (row_check_pos >= 0 && row_check_pos < 8 && col_check_pos >= 0 && col_check_pos < 8){
+            if (board[row_check_pos][col_check_pos].type == PAWN && board[row_check_pos][col_check_pos].color != turn){
+                printf("King is checked by PAWN\n");
+                return 1;
+            }
+        }
+    }
+    return 0;
+
+}
