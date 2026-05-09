@@ -246,6 +246,29 @@ int isCheck(Piece board[8][8], Color turn){
         colcheckpos += col;
         }
     }
+    // diagonal check
+    int diagonals[4][2] = {
+    {1,1},{1,-1},{-1,1},{-1,-1}
+    };
+
+        for (int d = 0; d < 4; d++){
+            row = diagonals[d][0];
+            col = diagonals[d][1];
+            rowcheckpos = king_y + row;
+            colcheckpos = king_x + col;
+            while(rowcheckpos >= 0 && rowcheckpos < 8 && colcheckpos >= 0 && colcheckpos < 8)
+            {
+                if (board[rowcheckpos][colcheckpos].type != EMPTY){
+                    if ((board[rowcheckpos][colcheckpos].type == BISHOP || board[rowcheckpos][colcheckpos].type == QUEEN) && board[rowcheckpos][colcheckpos].color != turn){
+                        printf("King is checked by %d\n", board[rowcheckpos][colcheckpos].type);
+                        return 1;
+                    }
+                    break;
+                }
+                rowcheckpos += row;
+                colcheckpos += col;
+            }
+}
     return 0;
  
 }
