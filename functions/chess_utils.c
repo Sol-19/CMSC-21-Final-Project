@@ -212,7 +212,7 @@ void findKing(Piece board[8][8], Color turn, int *king_x, int *king_y){
     }
 }
 
-int isCheck(Move move, Piece board[8][8], Color turn){
+int isCheck(Piece board[8][8], Color turn){
     int king_x;
     int king_y;
 
@@ -267,14 +267,14 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         //
         currentBoard(board, previousBoard);
         applyMove(move, board, turn);
-        if (isCheck(move, board, turn)){
-            printf("ILLEGAL CHECK!!");
+        if (isCheck(board, turn)){
+            printf("OPEN CHECK, ILLEGAL MOVE!!");
             revertBoard(board, previousBoard);
             continue;
         }
 
         turn = (turn == WHITE)? BLACK : WHITE;
-        if (isCheck(move, board, turn)){
+        if (isCheck(board, turn)){
             printf("CHECK!!");
         }
     }

@@ -1,3 +1,4 @@
+#include "king.h"
 #include "../chess_struct.h"
 #include "../chess_utils.h"
 #include <stdio.h>
@@ -17,7 +18,8 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
                 && (board[row][7].type == ROOK && board[row][7].color==turn && !(board[row][7].move_count))//and its a same color rook and not moved
                 && (board[row][6].type==EMPTY) // and two squares empty
                 && (board[row][5].type==EMPTY) 
-                //add more if not checked when going to the destination
+                && !(squareAttacked(row, 5, board, turn))
+                && !(squareAttacked(row, 6, board, turn))
             );
             case CASTLE_QUEENSIDE:
                 return (
@@ -26,18 +28,23 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
                 && (board[row][3].type==EMPTY) // and three squares empty
                 && (board[row][2].type==EMPTY) 
                 && (board[row][1].type==EMPTY) 
-                //add more if not checked when going to the destination
+                && !(squareAttacked(row, 3, board, turn))
+                && !(squareAttacked(row, 2, board, turn))
+                && !(squareAttacked(row, 1, board, turn))
                 );
     }
 }
 
 int squareAttacked(int row, int col, Piece board[8][8], Color turn){
-    Move move;
-    Piece simulated_board[8][8];
-    currentBoard(simulated_board, board);
-    simulated_board[row][col].type = KING;
+    int king_x;
+    int king_y;
+    Piece simulated_board[8][8] = {0};
+    currentBoard(board, simulated_board);//copies the board with a simulated board 
+    findKing(simulated_board, turn, &king_x, &king_y); //finds the king 
+    simulated_board[king_y][king_x].type = EMPTY; // changes the kings position into empty;
+    simulated_board[row][col].type = KING; //simulates the king to be in the designated positions
     simulated_board[row][col].color = turn;
-    if (isCheck(move, simulated_board, turn)){
+    if (isCheck(simulated_board, turn)){ //checks for check in the simulated board
         return 1;
     }
     return 0;

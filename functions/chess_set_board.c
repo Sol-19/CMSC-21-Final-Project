@@ -9,8 +9,8 @@ void setBoard(Piece board [8][8])
     board[0][2].type = BISHOP; board[0][2].color = BLACK;
     board[0][3].type = QUEEN; board[0][3].color = BLACK;
     board[0][4].type = KING; board[0][4].color = BLACK;
-    board[0][5].type = BISHOP; board[0][5].color = BLACK;
-    board[0][6].type = KNIGHT; board[0][6].color = BLACK;
+    // board[0][5].type = BISHOP; board[0][5].color = BLACK;
+    // board[0][6].type = KNIGHT; board[0][6].color = BLACK;
     board[0][7].type = ROOK; board[0][7].color = BLACK;
 
     board[7][0].type = ROOK; board[7][0].color = WHITE;

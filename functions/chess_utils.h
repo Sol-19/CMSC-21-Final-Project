@@ -11,7 +11,7 @@ void applyMove(Move move, Piece board[8][8], Color turn);
 void gameLoop(Piece board[8][8], Piece previousBoard[8][8]);
 void revertBoard(Piece board[8][8], Piece previousBoard[8][8]);
 void currentBoard(Piece board[8][8], Piece previousBoard[8][8]);
-int isCheck(Move move, Piece board[8][8], Color turn);
+int isCheck(Piece board[8][8], Color turn);
 void findKing(Piece board[8][8], Color turn, int *king_x, int *king_y);
 
 #endif
