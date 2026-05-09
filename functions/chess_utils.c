@@ -166,12 +166,15 @@ void applyMove(Move move, Piece board[8][8], Color turn)
 
         board[row][6] = board[row][4]; // switch king to col 6
         board[row][5] = board[row][7]; // switch rook to col 5
+        board[row][6].move_count++; 
+        board[row][5].move_count++;
 
         board[row][4].type = EMPTY; // set the original king to empty
         board[row][4].color = NONE;
 
         board[row][7].type = EMPTY; // set the original rook to empty
         board[row][7].color = NONE;
+
 
     }
     else if(move.type == CASTLE_QUEENSIDE)
@@ -180,6 +183,8 @@ void applyMove(Move move, Piece board[8][8], Color turn)
 
         board[row][2] = board[row][4]; // switch king to col 2
         board[row][3]  = board[row][0]; // switch rook to col 3
+        board[row][2].move_count++; // switch king to col 2
+        board[row][3].move_count++;
 
         board[row][4].type = EMPTY; // set the original king to empty
         board[row][4].color = NONE;
@@ -205,6 +210,7 @@ int isCheck(Move move, Piece board[8][8], Color turn){
             }
         }
         if (kingfound){
+            printf("King found in %d, %d\n", king_x, king_y);
             break;
         }
     }
@@ -227,6 +233,7 @@ int isCheck(Move move, Piece board[8][8], Color turn){
         {
             if (board[rowcheckpos][colcheckpos].type != EMPTY){
                 if ((board[rowcheckpos][colcheckpos].type == ROOK || board[rowcheckpos][colcheckpos].type == QUEEN ) && (board[rowcheckpos][colcheckpos].color != turn)){
+                    printf("King is checked by %d\n", board[rowcheckpos][colcheckpos].type);
                 return 1;
             }
             break;
@@ -235,9 +242,8 @@ int isCheck(Move move, Piece board[8][8], Color turn){
         colcheckpos += col;
         }
     }
+    return 0;
  
-
-
 }
 
 void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
@@ -257,12 +263,15 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         //
         currentBoard(board, previousBoard);
         applyMove(move, board, turn);
-
-        //if in check when applied move
-        //revertBoard(board, previousBoard);
-        
-        //
+        if (isCheck(move, board, turn)){
+            printf("ILLEGAL CHECK!!");
+            revertBoard(board, previousBoard);
+            continue;
+        }
 
         turn = (turn == WHITE)? BLACK : WHITE;
+        if (isCheck(move, board, turn)){
+            printf("CHECK!!");
+        }
     }
 }

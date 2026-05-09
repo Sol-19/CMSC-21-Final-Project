@@ -23,10 +23,10 @@ void setBoard(Piece board [8][8])
     board[7][7].type = ROOK; board[7][7].color = WHITE;
 
 
-    for (int i = 0; i < 8; i++) {
-         board[1][i].type = PAWN; board[1][i].color = BLACK;
-         board[6][i].type = PAWN; board[6][i].color = WHITE;
-     }
+    // for (int i = 0; i < 8; i++) {
+    //      board[1][i].type = PAWN; board[1][i].color = BLACK;
+    //      board[6][i].type = PAWN; board[6][i].color = WHITE;
+    //  }
 
  
 }
