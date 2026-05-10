@@ -39,6 +39,7 @@ void printBoard(Piece board[8][8])
     {
         printf("%c\t", 'a' + column);
     }
+    printf("\n");
 }
 
 void printPiece(PieceType type, Color color) {
@@ -217,7 +218,6 @@ void findKing(Piece board[8][8], Color turn, int *king_x, int *king_y){
             }
         }
         if (kingfound){
-            printf("King found in %d, %d\n", *king_x, *king_y);
             break;
         }
     }
@@ -279,7 +279,8 @@ int hasNoLegalMoves(Piece board[8][8], Color turn)
             }
         }
     }
-    return 1;
+    printBoard(board);
+;    return 1;
 
 }
 
@@ -309,7 +310,7 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         turn = (turn == WHITE)? BLACK : WHITE;
         if (isCheck(board, turn)){
             printf("CHECK!!");\
-             if(hasNoLegalMoves(board,turn))
+            if(hasNoLegalMoves(board,turn))
         {
             printf("Check mate!\n");
             break;
