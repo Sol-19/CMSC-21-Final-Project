@@ -297,7 +297,7 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
             printf("Illegal move, try again.\n");
             continue;
         }
-        //
+        
         currentBoard(board, previousBoard);
         applyMove(move, board, turn);
         if (isCheck(board, turn)){
