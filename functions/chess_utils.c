@@ -235,9 +235,52 @@ int isCheck(Piece board[8][8], Color turn){
            isCheckKing(board, king_x, king_y, turn);
 }
 
-int isCheckMate(Piece board[8][8], Color turn)
+int hasNoLegalMoves(Piece board[8][8], Color turn)
 {
-    
+    Move move;
+    Piece *piece = NULL;
+    Piece previous_board[8][8];
+
+    for(int row = 0; row < 8; row++)
+    {
+        for(int column = 0; column < 8; column++)
+        {
+           move.from_x = row;
+           move.from_y = column;
+           piece = &board[move.from_x][move.from_y];
+
+           if( (*piece).type != EMPTY &&
+               (*piece).color == turn)
+            {
+                for(int row2 = 0; row2 < 8; row2++)
+                {
+                    for(int column2 = 0; column2 < 8; column2++)
+                    {
+
+                        move.to_x = row2;
+                        move.to_y = column2;
+                        if(!isLegal(move,board,turn))
+                        {
+                            continue;
+                        }
+
+                         currentBoard(board, previous_board);
+                         applyMove(move, board, turn);
+
+                         if (isCheck(board, turn)){
+                        revertBoard(board, previous_board);
+                        continue;
+                        }
+                        revertBoard(board, previous_board);
+                        return 0;;
+                        
+                    }
+                }
+            }
+        }
+    }
+    return 1;
+
 }
 
 void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
@@ -265,7 +308,18 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
 
         turn = (turn == WHITE)? BLACK : WHITE;
         if (isCheck(board, turn)){
-            printf("CHECK!!");
+            printf("CHECK!!");\
+             if(hasNoLegalMoves(board,turn))
+        {
+            printf("Check mate!\n");
+            break;
         }
+        }
+        if(hasNoLegalMoves(board,turn))
+        {
+            printf("Stalemate!\n");
+            break;
+        }
+
     }
 }
