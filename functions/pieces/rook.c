@@ -54,7 +54,6 @@ int isCheckRook(Piece board[8][8], int king_x, int king_y, Color turn)
         {
             if (board[row_check_pos][col_check_pos].type != EMPTY){
                 if ((board[row_check_pos][col_check_pos].type == ROOK || board[row_check_pos][col_check_pos].type == QUEEN ) && (board[row_check_pos][col_check_pos].color != turn)){
-                    printf("King is checked by %d\n", board[row_check_pos][col_check_pos].type);
                 return 1;
             }
             break;

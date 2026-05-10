@@ -52,7 +52,6 @@ int isCheckPawn(Piece board[8][8], int king_x, int king_y, Color turn)
         col_check_pos = king_x + pawn_attacks[i][1];
         if (row_check_pos >= 0 && row_check_pos < 8 && col_check_pos >= 0 && col_check_pos < 8){
             if (board[row_check_pos][col_check_pos].type == PAWN && board[row_check_pos][col_check_pos].color != turn){
-                printf("King is checked by PAWN\n");
                 return 1;
             }
         }

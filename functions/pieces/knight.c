@@ -26,7 +26,6 @@ int isCheckKnight(Piece board[8][8], int king_x, int king_y, Color turn)
             col_check_pos = king_x + knight_moves[i][1];
             if (row_check_pos >= 0 && row_check_pos < 8 && col_check_pos >= 0 && col_check_pos < 8){
                 if (board[row_check_pos][col_check_pos].type == KNIGHT && board[row_check_pos][col_check_pos].color != turn){
-                    printf("King is checked by KNIGHT\n");
                     return 1;
                 }
             }
