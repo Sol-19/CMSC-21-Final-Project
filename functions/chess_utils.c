@@ -312,7 +312,7 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
             printf("CHECK\n!!");\
             if(hasNoLegalMoves(board,turn))
         {
-            printf("Check mate!\n");
+            printf("Checkmate!\n");
             break;
         }
         }
