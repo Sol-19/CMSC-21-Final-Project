@@ -59,3 +59,28 @@ int isCheckPawn(Piece board[8][8], int king_x, int king_y, Color turn)
     return 0;
 
 }
+
+int EnPassant(Piece board[8][8], Move move, Color turn) {
+    
+    Piece piece = board[move.from_x][move.from_y];
+    Piece destination = board[move.to_x][move.to_y];
+    Piece adjacent_piece = board[move.from_x][move.to_y]; //the piece next to / the same row as the piece, but col is in the place of atk
+
+    int col_diff = abs(move.to_y - move.from_y);
+
+    if (piece.type != PAWN) {
+        return 0;
+    }
+
+    int step = (piece.color == WHITE) ? -1 : 1; //white[6][] moves up, black[1][] moves down
+
+    if (col_diff == 1 && move.to_x == move.from_x + step) { //if pawn moves diagonally / attacks
+        if (destination.type == EMPTY) { //place of atk is empty
+            if (adjacent_piece.type == PAWN && adjacent_piece.color != piece.color && adjacent_piece.move_count == 1 && (piece.color == WHITE ? move.from_x == 3 : move.from_x == 4)) {
+                return 1; 
+                // checks if enemy piece next to pawn is also a pawn and has only moved once (the ternary operator checks if the pawn is in the correct row, meaning the enemy pawn moved 2 steps in their 1st move)
+            }
+        }
+    }
+    return 0;
+}
