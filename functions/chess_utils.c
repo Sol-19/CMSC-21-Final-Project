@@ -153,44 +153,57 @@ void applyMove(Move move, Piece board[8][8], Color turn)
 {
     if(move.type == NORMAL)
     {
+   
         // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
-        board[move.to_x][move.to_y] = board[move.from_x][move.from_y];
-        board[move.to_x][move.to_y].move_count++;
+        Piece *piece = &board[move.from_x][move.from_y]; 
+        Piece *destination = &board[move.to_x][move.to_y];
 
-        board[move.from_x][move.from_y].type = EMPTY;
-        board[move.from_x][move.from_y].color = NONE;
+        (*destination) = (*piece); // place the piece into its destination
+        (*destination).move_count++; // increment since the piece has moved
+
+        // set the original piece into nothing since it has already moved
+        (*piece).type = EMPTY;
+        (*piece).color = NONE;
+        
     }
     else if(move.type == CASTLE_KINGSIDE)
     {
        int row = turn == WHITE?7:0;
 
-        board[row][6] = board[row][4]; // switch king to col 6
-        board[row][5] = board[row][7]; // switch rook to col 5
-        board[row][6].move_count++; 
-        board[row][5].move_count++;
+        Piece *king = &board[row][4];
+        Piece *rook = &board[row][7];
+        Piece *king_dest = &board[row][6];
+        Piece *rook_dest = &board[row][5];
 
-        board[row][4].type = EMPTY; // set the original king to empty
-        board[row][4].color = NONE;
+        (*king_dest) = (*king); // switch king to col 6
+        (*rook_dest) = (*rook); // switch rook to col 5
 
-        board[row][7].type = EMPTY; // set the original rook to empty
-        board[row][7].color = NONE;
+        (*king_dest).move_count++;
+        (*rook_dest).move_count++;
 
+        (*king).type = EMPTY; (*king).color = NONE; // set the original king to empty
+        (*rook).type = EMPTY; (*rook).color = NONE; // set the original rook to empty
 
     }
     else if(move.type == CASTLE_QUEENSIDE)
     {
         int row = turn == WHITE?7:0;
 
-        board[row][2] = board[row][4]; // switch king to col 2
-        board[row][3]  = board[row][0]; // switch rook to col 3
-        board[row][2].move_count++; // switch king to col 2
-        board[row][3].move_count++;
+        Piece *king = &board[row][4];
+        Piece *rook = &board[row][0];
 
-        board[row][4].type = EMPTY; // set the original king to empty
-        board[row][4].color = NONE;
+        Piece *king_dest = &board[row][2];
+        Piece *rook_dest = &board[row][3];
 
-        board[row][0].type = EMPTY; // set the original rook to empty
-        board[row][0].color = NONE;
+        (*king_dest) = (*king); // switch king to col 2
+        (*rook_dest) = (*rook); // switch rook to col 3
+
+        (*king_dest).move_count++;
+        (*rook_dest).move_count++;
+
+        (*king).type = EMPTY; (*king).color = NONE; // set the original king to empty
+        (*rook).type = EMPTY; (*rook).color = NONE; // set the original rook to empty
+
     }
 }
 
@@ -223,6 +236,8 @@ int isCheck(Piece board[8][8], Color turn){
            isCheckPawn(board, king_x, king_y, turn)   ||
            isCheckKing(board, king_x, king_y, turn);
 }
+
+
 
 void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
 {
