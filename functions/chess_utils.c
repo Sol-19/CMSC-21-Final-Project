@@ -148,8 +148,6 @@ void revertBoard(Piece board[8][8], Piece previousBoard[8][8]){
 }
 
 void applyMove(Move move, Piece board[8][8], Color turn) 
-
-
 {
     if(move.type == NORMAL)
     {
@@ -237,7 +235,10 @@ int isCheck(Piece board[8][8], Color turn){
            isCheckKing(board, king_x, king_y, turn);
 }
 
-
+int isCheckMate(Piece board[8][8], Color turn)
+{
+    
+}
 
 void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
 {
