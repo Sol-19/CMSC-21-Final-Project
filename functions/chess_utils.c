@@ -302,14 +302,14 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         currentBoard(board, previousBoard);
         applyMove(move, board, turn);
         if (isCheck(board, turn)){
-            printf("OPEN CHECK, ILLEGAL MOVE!!");
+            printf("OPEN CHECK, ILLEGAL MOVE!!\n");
             revertBoard(board, previousBoard);
             continue;
         }
 
         turn = (turn == WHITE)? BLACK : WHITE;
         if (isCheck(board, turn)){
-            printf("CHECK!!");\
+            printf("CHECK\n!!");\
             if(hasNoLegalMoves(board,turn))
         {
             printf("Check mate!\n");
