@@ -291,6 +291,8 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
 {
     Color turn = WHITE;
     Move move;
+    int inCheck;
+    int legalMoves;
     while(1)
     {
         printf("\n");
@@ -311,8 +313,8 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         }
 
         turn = (turn == WHITE)? BLACK : WHITE;
-        int inCheck = isCheck(board, turn);
-        int legalMoves = hasLegalMoves(board, turn);
+        inCheck = isCheck(board, turn);
+        legalMoves = hasLegalMoves(board, turn);
 
         if (inCheck && !legalMoves) // if check and has no legal moves then it is checkmate
         {
