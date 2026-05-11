@@ -205,27 +205,6 @@ void applyMove(Move move, Piece board[8][8], Color turn)
 
         (*king).type = EMPTY; (*king).color = NONE; // set the original king to empty
         (*rook).type = EMPTY; (*rook).color = NONE; // set the original rook to empty
-
-    }
-    else if (move.type == ENPASSANT)
-    {
-        printf("Enpassant triggered!!");
-        int x = (turn == WHITE)? 1:-1;
-         // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
-        Piece *ally_pawn = &board[move.from_x][move.from_y]; 
-        Piece *destination = &board[move.to_x][move.to_y];
-        Piece *enemy_pawn = &board[move.from_x + x][move.to_y];
-
-        (*destination) = (*ally_pawn); // place the piece into its destination
-        (*destination).move_count++; // increment since the piece has moved
-
-        // set the original piece into nothing since it has already moved
-        (*ally_pawn).type = EMPTY;
-        (*ally_pawn).color = NONE;
-
-        (*enemy_pawn).type = EMPTY;
-        (*enemy_pawn).color = NONE;
-
     }
 }
 

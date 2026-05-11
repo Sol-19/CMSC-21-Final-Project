@@ -23,8 +23,8 @@ int enPassant(Piece board[8][8], Move move, Color turn) {
     if (col_diff == 1 && move.to_x == move.from_x + step) { //if pawn moves diagonally / attacks
         if (destination.type == EMPTY) { //place of atk is empty
             if (adjacent_piece.type == PAWN && adjacent_piece.color != piece.color && adjacent_piece.move_count == 1 && (piece.color == WHITE ? move.from_x == 3 : move.from_x == 4)) {
-                printf("enpassant triggered on islegal");
-                move.type = ENPASSANT;
+                board[move.from_x][move.to_y].type = EMPTY;
+                board[move.from_x][move.to_y].color = NONE;
                 return 1; 
                 // checks if enemy piece next to pawn is also a pawn and has only moved once (the ternary operator checks if the pawn is in the correct row, meaning the enemy pawn moved 2 steps in their 1st move)
             }
@@ -39,8 +39,6 @@ int isLegalPawn (Piece board[8][8], Move move, Color turn) {//refactor to use th
 
     Piece piece = board[move.from_x][move.from_y];
     Piece destination = board[move.to_x][move.to_y];
-    
-    
 
     if (piece.type != PAWN) {
         return 0; //returns false if not pawn
