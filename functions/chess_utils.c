@@ -9,8 +9,11 @@
 #include "pieces/king.h"
 #include "pieces/knight.h"
 #include <string.h>
-#define RED   "\033[31m"
-#define BLUE  "\033[34m"
+#define RED   "\033[1;31m"
+#define BLUE  "\033[1;34m"
+#define GREEN "\033[1;32m"
+#define YELLOW "\033[1;33m"
+#define MAGENTA "\033[1;35m"
 #define RESET "\033[0m"
 #define MAX_INPUT 100
 
@@ -280,7 +283,7 @@ int hasLegalMoves(Piece board[8][8], Color turn)
         }
     }
     printBoard(board);
-;    return 0;
+;   return 0;
 
 }
 
@@ -308,19 +311,29 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         }
 
         turn = (turn == WHITE)? BLACK : WHITE;
-        if (isCheck(board, turn)){
-            printf("CHECK\n!!");\
-            if(!hasLegalMoves(board,turn))
-        {
-            printf("Checkmate!\n");
-            break;
-        }
-        }
-        if(!hasLegalMoves(board,turn))
-        {
-            printf("Stalemate!\n");
-            break;
-        }
+        int inCheck = isCheck(board, turn);
+        int legalMoves = hasLegalMoves(board, turn);
 
+        if (inCheck && !legalMoves) // if check and has no legal moves then it is checkmate
+        {
+            printf(GREEN);
+            printf("Checkmate!\n");
+            printf(RESET);
+            break;
+        }
+        else if (inCheck) // if ischeck then king is incheck
+        {
+            printf(YELLOW);
+            printf("Check!\n");
+            printf(RESET);
+        }
+        else if(!legalMoves) // if player has no legal moves left and is not in check then it is a stalemate
+        {
+            printf(MAGENTA);
+            printf("Stalemate!\n");
+            printf(RESET);
+            break;
+        }
+     
     }
 }
