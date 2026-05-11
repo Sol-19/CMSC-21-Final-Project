@@ -5,14 +5,14 @@
 
 int isLegalRook(Move move, Piece board[8][8])
 {
-    int row_diff = abs(move.to_x - move.piece_row);
-    int col_diff = abs(move.to_y - move.piece_column);
+    int row_diff = abs(move.destination_row - move.piece_row);
+    int col_diff = abs(move.destination_column - move.piece_column);
 
     int is_horizontal = (row_diff == 0);
     int is_vertical   = (col_diff == 0);
 
-    int row_increasing  = (move.to_x > move.piece_row);
-    int col_increasing = (move.to_y > move.piece_column);
+    int row_increasing  = (move.destination_row > move.piece_row);
+    int col_increasing = (move.destination_column > move.piece_column);
 
     // not a straight line
     if (!is_horizontal && !is_vertical) return 0;
@@ -25,7 +25,7 @@ int isLegalRook(Move move, Piece board[8][8])
     int col = move.piece_column + col_direction;
 
     // check if there's a piece in the way
-    while (row != move.to_x || col != move.to_y) {
+    while (row != move.destination_row || col != move.destination_column) {
     if (board[row][col].type != EMPTY) return 0;
     row += row_direction;
     col += col_direction;

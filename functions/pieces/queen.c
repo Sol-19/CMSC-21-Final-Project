@@ -7,8 +7,8 @@
 
 int isLegalQueen(Move move, Piece board[8][8])
 {
-    int row_diff = abs(move.to_x - move.piece_row);
-    int col_diff = abs(move.to_y - move.piece_column);
+    int row_diff = abs(move.destination_row - move.piece_row);
+    int col_diff = abs(move.destination_column - move.piece_column);
 
     int is_diagonal = (row_diff == col_diff);
     int is_straight = (row_diff == 0 || col_diff == 0);

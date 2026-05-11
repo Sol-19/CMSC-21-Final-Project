@@ -9,10 +9,10 @@
 int enPassant(Piece board[8][8], Move move, Color turn) {
     
     Piece piece = board[move.piece_row][move.piece_column];
-    Piece destination = board[move.to_x][move.to_y];
-    Piece adjacent_piece = board[move.piece_row][move.to_y]; //the piece next to / the same row as the piece, but col is in the place of atk
+    Piece destination = board[move.destination_row][move.destination_column];
+    Piece adjacent_piece = board[move.piece_row][move.destination_column]; //the piece next to / the same row as the piece, but col is in the place of atk
 
-    int col_diff = abs(move.to_y - move.piece_column);
+    int col_diff = abs(move.destination_column - move.piece_column);
 
     if (piece.type != PAWN) {
         return 0;
@@ -20,11 +20,11 @@ int enPassant(Piece board[8][8], Move move, Color turn) {
 
     int step = (piece.color == WHITE) ? -1 : 1; //white[6][] moves up, black[1][] moves down
 
-    if (col_diff == 1 && move.to_x == move.piece_row + step) { //if pawn moves diagonally / attacks
+    if (col_diff == 1 && move.destination_row == move.piece_row + step) { //if pawn moves diagonally / attacks
         if (destination.type == EMPTY) { //place of atk is empty
             if (adjacent_piece.type == PAWN && adjacent_piece.color != piece.color && adjacent_piece.move_count == 1 && (piece.color == WHITE ? move.piece_row == 3 : move.piece_row == 4)) {
-                board[move.piece_row][move.to_y].type = EMPTY;
-                board[move.piece_row][move.to_y].color = NONE;
+                board[move.piece_row][move.destination_column].type = EMPTY;
+                board[move.piece_row][move.destination_column].color = NONE;
                 return 1; 
                 // checks if enemy piece next to pawn is also a pawn and has only moved once (the ternary operator checks if the pawn is in the correct row, meaning the enemy pawn moved 2 steps in their 1st move)
             }
@@ -35,10 +35,10 @@ int enPassant(Piece board[8][8], Move move, Color turn) {
 
 int isLegalPawn (Piece board[8][8], Move move, Color turn) {//refactor to use the move struct
     
-    int col_diff = abs(move.to_y - move.piece_column);
+    int col_diff = abs(move.destination_column - move.piece_column);
 
     Piece piece = board[move.piece_row][move.piece_column];
-    Piece destination = board[move.to_x][move.to_y];
+    Piece destination = board[move.destination_row][move.destination_column];
 
     if (piece.type != PAWN) {
         return 0; //returns false if not pawn
@@ -47,20 +47,20 @@ int isLegalPawn (Piece board[8][8], Move move, Color turn) {//refactor to use th
     int step = (turn == WHITE) ? -1 : 1; //white[6][] moves up, black[1][] moves down
 
     if (col_diff == 0) { //if pawn is on the same col
-        if (move.to_x == move.piece_row + step) { //if pawn moves one step forward
+        if (move.destination_row == move.piece_row + step) { //if pawn moves one step forward
             if (destination.type == EMPTY) {
                 return 1; //if the destination is empty, return true
             }   
         }
         if ((turn == WHITE && move.piece_row == 6) || (turn == BLACK && move.piece_row == 1)) { //if pawn is not moved yet
-            if (move.to_x == move.piece_row + step * 2) { //if user wants to move 2 steps
+            if (move.destination_row == move.piece_row + step * 2) { //if user wants to move 2 steps
                 if (destination.type == EMPTY && board[move.piece_row + step][move.piece_column].type == EMPTY) {
                     return 1; //if the next 2 rows are empty, returns true
                 }
             }
         }
     }
-    else if (col_diff == 1 && move.to_x == move.piece_row + step) { //if pawn attacks
+    else if (col_diff == 1 && move.destination_row == move.piece_row + step) { //if pawn attacks
         if (destination.type != EMPTY && destination.color != piece.color) {
             return 1; //if destination is not empty and the opposite color, return true
         }
@@ -93,13 +93,13 @@ int isCheckPawn(Piece board[8][8], int king_x, int king_y, Color turn)
 
 int pawnPromotion(Piece board[8][8],Move move, Color turn)
 {
-    Piece piece = board[move.to_x][move.to_y];// this means that the pawn is already at the designation
+    Piece piece = board[move.destination_row][move.destination_column];// this means that the pawn is already at the designation
     if(piece.type != PAWN) // this checks if its a pawn
     {
         return 0;
     }
     int promotion_row = (turn == WHITE)? 0:7; 
-    if (move.to_x == promotion_row)
+    if (move.destination_row == promotion_row)
     {
         char choice;
         PieceType chosen_type;
@@ -114,7 +114,7 @@ int pawnPromotion(Piece board[8][8],Move move, Color turn)
             else if (choice == 'N'){chosen_type = KNIGHT; break;}
             else printf("Invalid input!!");
         }
-        board[move.to_x][move.to_y].type = chosen_type;
+        board[move.destination_row][move.destination_column].type = chosen_type;
         return 1;
     }
     return 0;

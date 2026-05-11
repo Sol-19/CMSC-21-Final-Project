@@ -5,11 +5,11 @@
 
 int isLegalBishop(Move move, Piece board[8][8])
 {
-    int row_diff = abs(move.to_x - move.from_x);
-    int col_diff = abs(move.to_y - move.from_y);
+    int row_diff = abs(move.destination_row - move.piece_row);
+    int col_diff = abs(move.destination_column - move.piece_column);
 
-    int row_increasing  = (move.to_x > move.from_x);
-    int col_increasing = (move.to_y > move.from_y);
+    int row_increasing  = (move.destination_row > move.piece_row);
+    int col_increasing = (move.destination_column > move.piece_column);
 
     // must be diagonal
     if (row_diff != col_diff) return 0;
@@ -18,11 +18,11 @@ int isLegalBishop(Move move, Piece board[8][8])
     int col_direction = col_increasing ? 1 : -1;
 
     // starting row and col to check
-    int row = move.from_x + row_direction;
-    int col = move.from_y + col_direction;
+    int row = move.piece_row + row_direction;
+    int col = move.piece_column + col_direction;
 
     //check if path is cleaer
-    while (row != move.to_x && col != move.to_y) {
+    while (row != move.destination_row && col != move.destination_column) {
         if (board[row][col].type != EMPTY) return 0;
         row += row_direction;
         col += col_direction;

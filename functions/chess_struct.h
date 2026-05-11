@@ -12,7 +12,7 @@
 
     typedef struct{
         int piece_row, piece_column;
-        int to_x, to_y;
+        int destination_row, destination_column;
         MoveType type;
     } Move;
 
