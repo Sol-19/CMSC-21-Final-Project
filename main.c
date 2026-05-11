@@ -6,9 +6,6 @@
 
 int main()
 {
-    int i, j;
-    char move_from[100];
-    char move_to[100];
     Piece board[8][8] = {0};
     Piece previousBoard[8][8];
     Move playermoveturn;
