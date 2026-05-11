@@ -235,7 +235,7 @@ int isCheck(Piece board[8][8], Color turn){
            isCheckKing(board, king_x, king_y, turn);
 }
 
-int hasNoLegalMoves(Piece board[8][8], Color turn)
+int hasLegalMoves(Piece board[8][8], Color turn)
 {
     Move move;
     Piece *piece = NULL;
@@ -272,7 +272,7 @@ int hasNoLegalMoves(Piece board[8][8], Color turn)
                         continue;
                         }
                         revertBoard(board, previous_board);
-                        return 0;;
+                        return 1;;
                         
                     }
                 }
@@ -280,7 +280,7 @@ int hasNoLegalMoves(Piece board[8][8], Color turn)
         }
     }
     printBoard(board);
-;    return 1;
+;    return 0;
 
 }
 
@@ -310,13 +310,13 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         turn = (turn == WHITE)? BLACK : WHITE;
         if (isCheck(board, turn)){
             printf("CHECK\n!!");\
-            if(hasNoLegalMoves(board,turn))
+            if(!hasLegalMoves(board,turn))
         {
             printf("Checkmate!\n");
             break;
         }
         }
-        if(hasNoLegalMoves(board,turn))
+        if(!hasLegalMoves(board,turn))
         {
             printf("Stalemate!\n");
             break;

@@ -13,7 +13,7 @@ void revertBoard(Piece board[8][8], Piece previousBoard[8][8]);
 void currentBoard(Piece board[8][8], Piece previousBoard[8][8]);
 int isCheck(Piece board[8][8], Color turn);
 void findKing(Piece board[8][8], Color turn, int *king_x, int *king_y);
-int hasNoLegalMoves(Piece board[8][8], Color turn);
+int hasLegalMoves(Piece board[8][8], Color turn);
 
 #endif
 
