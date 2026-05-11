@@ -81,7 +81,7 @@ Move playerMove (Color turn)
         if ((strcmp(piece, "O-O-O") == 0) || (strcmp(piece, "O-O") == 0)) {
             move.type = (strcmp(piece, "O-O") == 0) ? CASTLE_KINGSIDE : CASTLE_QUEENSIDE;
             move.from_y = 4;
-            move.from_x = turn == WHITE? 7 : 0;
+            move.piece_row = turn == WHITE? 7 : 0;
             return move;
         }
 
@@ -98,7 +98,7 @@ Move playerMove (Color turn)
             continue;
         }
 
-        move.from_x = 8 - (piece[1] - '0');
+        move.piece_row = 8 - (piece[1] - '0');
         move.from_y = piece[0] - 'a';
         move.to_x   = 8 - (destination[1] - '0');
         move.to_y   = destination[0] - 'a';
@@ -112,7 +112,7 @@ Move playerMove (Color turn)
 
 int isLegal(Move move, Piece board[8][8], Color turn)
 {
-    Piece piece = board[move.from_x][move.from_y];
+    Piece piece = board[move.piece_row][move.from_y];
     if (move.type == NORMAL){
     Piece destination = board[move.to_x][move.to_y];
     // can't capture ally piece
@@ -157,7 +157,7 @@ void applyMove(Move move, Piece board[8][8], Color turn)
     {
    
         // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
-        Piece *piece = &board[move.from_x][move.from_y]; 
+        Piece *piece = &board[move.piece_row][move.from_y]; 
         Piece *destination = &board[move.to_x][move.to_y];
 
         (*destination) = (*piece); // place the piece into its destination
@@ -247,10 +247,10 @@ int hasLegalMoves(Piece board[8][8], Color turn)
     {
         for(int column = 0; column < 8; column++)
         {
-           move.from_x = row;
+           move.piece_row = row;
            move.from_y = column;
            move.type = NORMAL;
-           piece = &board[move.from_x][move.from_y];
+           piece = &board[move.piece_row][move.from_y];
 
      
            if( ((*piece).type != EMPTY) &&

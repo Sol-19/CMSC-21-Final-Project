@@ -9,8 +9,8 @@ int isLegalKing(Piece board[8][8], Move move, Color turn)
     int row = turn == WHITE?7:0;
         switch(move.type){
             case NORMAL:
-                int row_diff = abs(move.to_x - move.from_x);
-                int col_diff = abs(move.to_y - move.from_y);
+                int row_diff = abs(move.to_x - move.piece_row);
+                int col_diff = abs(move.to_y - move.piece_column);
                 return (row_diff <= 1 && col_diff <= 1);
             case CASTLE_KINGSIDE:
                 return( 

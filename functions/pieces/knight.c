@@ -5,8 +5,8 @@
 
 int isLegalKnight(Move move)
 {
-    int row_diff = abs(move.to_x - move.from_x);
-    int col_diff = abs(move.to_y - move.from_y);
+    int row_diff = abs(move.to_x - move.piece_row);
+    int col_diff = abs(move.to_y - move.piece_column);
 
     return (row_diff == 2 && col_diff == 1) || (row_diff == 1 && col_diff == 2);
 }
