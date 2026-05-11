@@ -125,7 +125,7 @@ int isLegal(Move move, Piece board[8][8], Color turn)
 
     //we return 1 for is legal<piece> that means the move is legal
     switch (piece.type) {
-        case PAWN:  return isLegalPawn(board, move);
+        case PAWN:  return isLegalPawn(board, move, turn);
         case ROOK:   return isLegalRook(move, board);
         case KNIGHT: return isLegalKnight(move);
         case BISHOP: return isLegalBishop(move, board);
@@ -207,6 +207,26 @@ void applyMove(Move move, Piece board[8][8], Color turn)
         (*rook).type = EMPTY; (*rook).color = NONE; // set the original rook to empty
 
     }
+    else if (move.type == ENPASSANT)
+    {
+        printf("Enpassant triggered!!");
+        int x = (turn == WHITE)? 1:-1;
+         // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
+        Piece *ally_pawn = &board[move.from_x][move.from_y]; 
+        Piece *destination = &board[move.to_x][move.to_y];
+        Piece *enemy_pawn = &board[move.from_x + x][move.to_y];
+
+        (*destination) = (*ally_pawn); // place the piece into its destination
+        (*destination).move_count++; // increment since the piece has moved
+
+        // set the original piece into nothing since it has already moved
+        (*ally_pawn).type = EMPTY;
+        (*ally_pawn).color = NONE;
+
+        (*enemy_pawn).type = EMPTY;
+        (*enemy_pawn).color = NONE;
+
+    }
 }
 
 void findKing(Piece board[8][8], Color turn, int *king_x, int *king_y){
@@ -250,11 +270,14 @@ int hasLegalMoves(Piece board[8][8], Color turn)
         {
            move.from_x = row;
            move.from_y = column;
+           move.type = NORMAL;
            piece = &board[move.from_x][move.from_y];
 
-           if( (*piece).type != EMPTY &&
-               (*piece).color == turn)
+     
+           if( ((*piece).type != EMPTY) &&
+               ((*piece).color == turn))
             {
+          
                 for(int row2 = 0; row2 < 8; row2++)
                 {
                     for(int column2 = 0; column2 < 8; column2++)
@@ -275,7 +298,7 @@ int hasLegalMoves(Piece board[8][8], Color turn)
                         continue;
                         }
                         revertBoard(board, previous_board);
-                        return 1;;
+                        return 1;
                         
                     }
                 }
@@ -312,9 +335,13 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
             continue;
         }
 
+        pawnPromotion(board, move, turn);
+       
+
         turn = (turn == WHITE)? BLACK : WHITE;
         inCheck = isCheck(board, turn);
         legalMoves = hasLegalMoves(board, turn);
+
 
         if (inCheck && !legalMoves) // if check and has no legal moves then it is checkmate
         {
@@ -332,6 +359,7 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         else if(!legalMoves) // if player has no legal moves left and is not in check then it is a stalemate
         {
             printf(MAGENTA);
+            printf("%d\n",turn);
             printf("Stalemate!\n");
             printf(RESET);
             break;
