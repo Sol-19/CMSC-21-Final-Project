@@ -2,6 +2,7 @@
 #include "../chess_utils.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 int isLegalPawn (Piece board[8][8], Move move) {//refactor to use the move struct
     
@@ -81,6 +82,38 @@ int EnPassant(Piece board[8][8], Move move, Color turn) {
                 // checks if enemy piece next to pawn is also a pawn and has only moved once (the ternary operator checks if the pawn is in the correct row, meaning the enemy pawn moved 2 steps in their 1st move)
             }
         }
+    }
+    return 0;
+}
+
+
+
+
+int pawnPromotion(Piece board[8][8],Move move, Color turn)
+{
+    Piece piece = board[move.to_x][move.to_y];// this means that the pawn is already at the designation
+    if(piece.type != PAWN) // this checks if its a pawn
+    {
+        return 0;
+    }
+    int promotion_row = (turn == WHITE)? 0:7; 
+    if (move.to_x == promotion_row)
+    {
+        char choice;
+        PieceType chosen_type;
+        printf("You have achieved pawn promotion choose piece [queen=Q, rook=R, bishop=B, rook=r]");
+        while(1)
+        {
+            scanf("%c", &choice);
+            choice = toupper(choice);
+            if (choice == 'Q'){chosen_type == QUEEN; break;}
+            else if (choice == 'R'){chosen_type == ROOK; break;}
+            else if (choice == 'B'){chosen_type == BISHOP; break;}
+            else if (choice == 'R'){chosen_type == ROOK; break;}
+            else printf("Inavalid input try again dumb bitch");
+        }
+        board[move.to_x][move.to_y].type == chosen_type;
+        return 1;
     }
     return 0;
 }
