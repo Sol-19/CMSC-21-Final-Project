@@ -297,6 +297,7 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
     Move move;
     int inCheck;
     int legalMoves;
+    system("cls");
     while(1)
     {
         printf("\n");
