@@ -23,8 +23,6 @@ int enPassant(Piece board[8][8], Move move, Color turn) {
     if (col_diff == 1 && move.destination_row == move.piece_row + step) { //if pawn moves diagonally / attacks
         if (destination.type == EMPTY) { //place of atk is empty
             if (adjacent_piece.type == PAWN && adjacent_piece.color != piece.color && adjacent_piece.move_count == 1 && (piece.color == WHITE ? move.piece_row == 3 : move.piece_row == 4)) {
-                board[move.piece_row][move.destination_column].type = EMPTY;
-                board[move.piece_row][move.destination_column].color = NONE;
                 return 1; 
                 // checks if enemy piece next to pawn is also a pawn and has only moved once (the ternary operator checks if the pawn is in the correct row, meaning the enemy pawn moved 2 steps in their 1st move)
             }
@@ -65,7 +63,11 @@ int isLegalPawn (Piece board[8][8], Move move, Color turn) {//refactor to use th
             return 1; //if destination is not empty and the opposite color, return true
         }
     }
-    return enPassant(board, move, turn);
+    if (enPassant(board, move, turn)){
+        board[move.piece_row][move.destination_column].type = EMPTY;
+        board[move.piece_row][move.destination_column].color = NONE;
+    }
+    return 1;
 }
 
 int isCheckPawn(Piece board[8][8], int king_x, int king_y, Color turn)

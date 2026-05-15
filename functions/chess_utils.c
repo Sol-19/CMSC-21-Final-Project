@@ -303,7 +303,7 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         printf("\n");
         printBoard(board);
         move = playerMove(turn);
-        system("cls"); //after getting the plyaer move clears the terminal
+        //system("cls"); //after getting the plyaer move clears the terminal
         if(!isLegal(move, board, turn))
         {
             printf(ORANGE);
