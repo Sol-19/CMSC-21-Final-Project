@@ -8,15 +8,17 @@
 
 int enPassant(Piece board[8][8], Move move, Color turn) {
     
+    
     Piece piece = board[move.piece_row][move.piece_column];
-    Piece destination = board[move.destination_row][move.destination_column];
-    Piece adjacent_piece = board[move.piece_row][move.destination_column]; //the piece next to / the same row as the piece, but col is in the place of atk
-
-    int col_diff = abs(move.destination_column - move.piece_column);
 
     if (piece.type != PAWN) {
         return 0;
     }
+
+    Piece destination = board[move.destination_row][move.destination_column];
+    Piece adjacent_piece = board[move.piece_row][move.destination_column]; //the piece next to / the same row as the piece, but col is in the place of atk
+
+    int col_diff = abs(move.destination_column - move.piece_column);
 
     int step = (piece.color == WHITE) ? -1 : 1; //white[6][] moves up, black[1][] moves down
 
@@ -63,13 +65,7 @@ int isLegalPawn (Piece board[8][8], Move move, Color turn) {//refactor to use th
             return 1; //if destination is not empty and the opposite color, return true
         }
     }
-    if (enPassant(board, move, turn)){ 
-        //need to be outside for some reason as if directly return mo ang func value tas sa sulod kang func gin clear ang side ya, 
-        //madula ang sa left but sa right somehow wala gakadula
-        board[move.piece_row][move.destination_column].type = EMPTY;
-        board[move.piece_row][move.destination_column].color = NONE;
-    }
-    return 1;
+    return enPassant(board, move, turn);
 }
 
 int isCheckPawn(Piece board[8][8], int king_x, int king_y, Color turn)

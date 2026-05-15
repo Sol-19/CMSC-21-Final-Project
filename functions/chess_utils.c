@@ -161,17 +161,23 @@ void applyMove(Move move, Piece board[8][8], Color turn)
         // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
         Piece *piece = &board[move.piece_row][move.piece_column]; 
         Piece *destination = &board[move.destination_row][move.destination_column];
+        if(enPassant(board,move, turn)){ 
+            //moved the enpassant checking again here to avoid bugs cause by haslegalmoves calling enpassant and removing the piece on the left
+            Piece *behind_piece = &board[move.piece_row][move.destination_column];
+            (*behind_piece).type = EMPTY;
+            (*behind_piece).color = NONE;
+        }
 
         (*destination) = (*piece); // place the piece into its destination
         (*destination).move_count++; // increment since the piece has moved
 
         // set the original piece into nothing since it has already moved
-        (*piece).type = EMPTY;
+        (*piece).type = EMPTY;        
         (*piece).color = NONE;
         
     }
     else if(move.type == CASTLE_KINGSIDE)
-    {
+    {      
        int row = turn == WHITE?7:0;
 
         Piece *king = &board[row][4];
@@ -303,7 +309,7 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         printf("\n");
         printBoard(board);
         move = playerMove(turn);
-        system("cls"); //after getting the plyaer move clears the terminal
+        //system("cls"); //after getting the plyaer move clears the terminal
         if(!isLegal(move, board, turn))
         {
             printf(ORANGE);
