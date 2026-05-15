@@ -63,7 +63,9 @@ int isLegalPawn (Piece board[8][8], Move move, Color turn) {//refactor to use th
             return 1; //if destination is not empty and the opposite color, return true
         }
     }
-    if (enPassant(board, move, turn)){
+    if (enPassant(board, move, turn)){ 
+        //need to be outside for some reason as if directly return mo ang func value tas sa sulod kang func gin clear ang side ya, 
+        //madula ang sa left but sa right somehow wala gakadula
         board[move.piece_row][move.destination_column].type = EMPTY;
         board[move.piece_row][move.destination_column].color = NONE;
     }
