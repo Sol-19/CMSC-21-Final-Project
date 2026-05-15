@@ -103,16 +103,19 @@ int pawnPromotion(Piece board[8][8],Move move, Color turn)
     {
         char choice;
         PieceType chosen_type;
-        printf("You have achieved pawn promotion choose piece [queen = Q, rook = R, bishop = B, Knight = N]: ");
         while(1)
         {
+            printBoard(board);
+            printf("You have achieved pawn promotion choose piece [queen = Q, rook = R, bishop = B, Knight = N]: ");
             scanf("%c", &choice);
             choice = toupper(choice);
+            while (getchar() != '\n'); //clears buffer and the board
+            system("cls");
             if (choice == 'Q'){chosen_type = QUEEN; break;}
             else if (choice == 'R'){chosen_type = ROOK; break;}
             else if (choice == 'B'){chosen_type = BISHOP; break;}
             else if (choice == 'N'){chosen_type = KNIGHT; break;}
-            else printf("Invalid input!!");
+            else printf("Invalid input!!\n");
         }
         board[move.destination_row][move.destination_column].type = chosen_type;
         return 1;

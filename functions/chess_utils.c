@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "chess_struct.h"
 #include "chess_utils.h"
 #include "pieces/pawn.h"
@@ -8,7 +10,6 @@
 #include "pieces/queen.h"
 #include "pieces/king.h"
 #include "pieces/knight.h"
-#include <string.h>
 #define RED   "\033[1;31m"
 #define BLUE  "\033[1;34m"
 #define GREEN "\033[1;32m"
@@ -301,6 +302,7 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         printf("\n");
         printBoard(board);
         move = playerMove(turn);
+        system("cls"); //after getting the plyaer move clears the terminal
         if(!isLegal(move, board, turn))
         {
             printf(ORANGE);
@@ -351,3 +353,4 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
      
     }
 }
+

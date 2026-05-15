@@ -40,7 +40,7 @@ void setBoard(Piece board [8][8])
     //      board[6][i].type = PAWN; board[6][i].color = WHITE;
     //  }
 
-    //Pin promotion setup, remove rook for promotion
+    // //Pin promotion setup, remove rook for promotion
     // board[1][0].type = KING; 
     // board[1][0].color = WHITE;
     // board[1][1].type = PAWN;
