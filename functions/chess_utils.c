@@ -157,7 +157,6 @@ void applyMove(Move move, Piece board[8][8], Color turn)
 {
     if(move.type == NORMAL)
     {
-   
         // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
         Piece *piece = &board[move.piece_row][move.piece_column]; 
         Piece *destination = &board[move.destination_row][move.destination_column];
