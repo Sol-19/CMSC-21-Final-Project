@@ -14,6 +14,7 @@
 #define GREEN "\033[1;32m"
 #define YELLOW "\033[1;33m"
 #define MAGENTA "\033[1;35m"
+#define ORANGE "\033[38;5;208m"
 #define RESET "\033[0m"
 #define MAX_INPUT 100
 
@@ -302,14 +303,18 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         move = playerMove(turn);
         if(!isLegal(move, board, turn))
         {
+            printf(ORANGE);
             printf("Illegal move, try again.\n");
+            printf(RESET);
             continue;
         }
         
         currentBoard(board, previousBoard);
         applyMove(move, board, turn);
         if (isCheck(board, turn)){
-            printf("OPEN CHECK, ILLEGAL MOVE!!\n");
+            printf(ORANGE);
+            printf("Illegal move, try again.\n");
+            printf(RESET);
             revertBoard(board, previousBoard);
             continue;
         }
