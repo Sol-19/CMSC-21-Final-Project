@@ -182,7 +182,7 @@ int isCheck(Piece board[8][8], Color turn){
            isCheckKing(board, king_x, king_y, turn);
 }
 
-int hasLegalMoves(Piece board[8][8], Color turn)
+int hasLegalMoves(Piece board[8][8], Color turn, int total_move_count)
 {
     Move move;
     Piece *piece = NULL;
@@ -215,7 +215,7 @@ int hasLegalMoves(Piece board[8][8], Color turn)
                         }
 
                          currentBoard(board, previous_board);
-                         applyMove(move, board, turn);
+                         applyMove(move, board, turn, total_move_count);
 
                          if (isCheck(board, turn)){
                         revertBoard(board, previous_board);
@@ -234,7 +234,7 @@ int hasLegalMoves(Piece board[8][8], Color turn)
 
 }
 
-void applyMove(Move move, Piece board[8][8], Color turn) 
+void applyMove(Move move, Piece board[8][8], Color turn, int total_move_count) 
 {
     if(move.type == NORMAL)
     {
@@ -244,6 +244,7 @@ void applyMove(Move move, Piece board[8][8], Color turn)
 
         (*destination) = (*piece); // place the piece into its destination
         (*destination).move_count++; // increment since the piece has moved
+        (*destination).last_moved = total_move_count; 
 
         // set the original piece into nothing since it has already moved
         (*piece).type = EMPTY;        
@@ -264,6 +265,7 @@ void applyMove(Move move, Piece board[8][8], Color turn)
 
         (*king_dest).move_count++;
         (*rook_dest).move_count++;
+        (*king_dest).last_moved = total_move_count;
 
         (*king).type = EMPTY; (*king).color = NONE; // set the original king to empty
         (*rook).type = EMPTY; (*rook).color = NONE; // set the original rook to empty
@@ -284,6 +286,7 @@ void applyMove(Move move, Piece board[8][8], Color turn)
 
         (*king_dest).move_count++;
         (*rook_dest).move_count++;
+        (*king_dest).last_moved = total_move_count;
 
         (*king).type = EMPTY; (*king).color = NONE; // set the original king to empty
         (*rook).type = EMPTY; (*rook).color = NONE; // set the original rook to empty
@@ -313,10 +316,17 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         }
         
         currentBoard(board, previousBoard);
-        applyMove(move, board, turn);
+        applyMove(move, board, turn, total_move_count);
         if(enPassant(previousBoard,move,turn)){ 
             //moved the enpassant checking again here to avoid bugs cause by haslegalmoves calling enpassant and removing the piece on the left
             Piece *behind_piece = &board[move.piece_row][move.destination_column];
+            if ((*behind_piece).last_moved+1 < total_move_count){
+                printf(ORANGE);
+                printf("Illegal move, try again.\n");
+                printf(RESET);
+                revertBoard(board, previousBoard);
+                continue;
+            }
             (*behind_piece).type = EMPTY;
             (*behind_piece).color = NONE;
         }
@@ -327,16 +337,13 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
             revertBoard(board, previousBoard);
             continue;
         }
-        
-
+    
         pawnPromotion(board, move, turn);
-        total_move_count++;
-       
+        total_move_count++;   
 
         turn = (turn == WHITE)? BLACK : WHITE;
         inCheck = isCheck(board, turn);
-        legalMoves = hasLegalMoves(board, turn);
-
+        legalMoves = hasLegalMoves(board, turn, total_move_count);
 
         if (inCheck && !legalMoves) // if check and has no legal moves then it is checkmate
         {

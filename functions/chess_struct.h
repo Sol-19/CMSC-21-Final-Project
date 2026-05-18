@@ -8,6 +8,7 @@
         PieceType type;
         Color color;
         int move_count;
+        int last_moved;
     }Piece;
 
     typedef struct{

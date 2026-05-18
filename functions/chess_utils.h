@@ -7,13 +7,13 @@ void printBoard(Piece board[8][8]);
 void printPiece(PieceType type, Color color);
 Move playerMove(Color turn);
 int isLegal(Move move, Piece board[8][8], Color turn);
-void applyMove(Move move, Piece board[8][8], Color turn);
+void applyMove(Move move, Piece board[8][8], Color turn, int total_move_count);
 void gameLoop(Piece board[8][8], Piece previousBoard[8][8]);
 void revertBoard(Piece board[8][8], Piece previousBoard[8][8]);
 void currentBoard(Piece board[8][8], Piece previousBoard[8][8]);
 int isCheck(Piece board[8][8], Color turn);
 void findKing(Piece board[8][8], Color turn, int *king_x, int *king_y);
-int hasLegalMoves(Piece board[8][8], Color turn);
+int hasLegalMoves(Piece board[8][8], Color turn, int total_move_count);
 
 #endif
 
