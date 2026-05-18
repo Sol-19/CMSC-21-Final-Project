@@ -320,7 +320,7 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         if(enPassant(previousBoard,move,turn)){ 
             //moved the enpassant checking again here to avoid bugs cause by haslegalmoves calling enpassant and removing the piece on the left
             Piece *behind_piece = &board[move.piece_row][move.destination_column];
-            if ((*behind_piece).last_moved+1 < total_move_count){
+            if ((*behind_piece).last_moved + 1 < total_move_count){
                 printf(ORANGE);
                 printf("Illegal move, try again.\n");
                 printf(RESET);
