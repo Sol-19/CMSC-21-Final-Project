@@ -153,68 +153,6 @@ void revertBoard(Piece board[8][8], Piece previousBoard[8][8]){
     }
 }
 
-void applyMove(Move move, Piece board[8][8], Color turn) 
-{
-    if(move.type == NORMAL)
-    {
-        // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
-        Piece *piece = &board[move.piece_row][move.piece_column]; 
-        Piece *destination = &board[move.destination_row][move.destination_column];
-        if(enPassant(board,move, turn)){ 
-            //moved the enpassant checking again here to avoid bugs cause by haslegalmoves calling enpassant and removing the piece on the left
-            Piece *behind_piece = &board[move.piece_row][move.destination_column];
-            (*behind_piece).type = EMPTY;
-            (*behind_piece).color = NONE;
-        }
-
-        (*destination) = (*piece); // place the piece into its destination
-        (*destination).move_count++; // increment since the piece has moved
-
-        // set the original piece into nothing since it has already moved
-        (*piece).type = EMPTY;        
-        (*piece).color = NONE;
-        
-    }
-    else if(move.type == CASTLE_KINGSIDE)
-    {      
-       int row = turn == WHITE?7:0;
-
-        Piece *king = &board[row][4];
-        Piece *rook = &board[row][7];
-        Piece *king_dest = &board[row][6];
-        Piece *rook_dest = &board[row][5];
-
-        (*king_dest) = (*king); // switch king to col 6
-        (*rook_dest) = (*rook); // switch rook to col 5
-
-        (*king_dest).move_count++;
-        (*rook_dest).move_count++;
-
-        (*king).type = EMPTY; (*king).color = NONE; // set the original king to empty
-        (*rook).type = EMPTY; (*rook).color = NONE; // set the original rook to empty
-
-    }
-    else if(move.type == CASTLE_QUEENSIDE)
-    {
-        int row = turn == WHITE?7:0;
-
-        Piece *king = &board[row][4];
-        Piece *rook = &board[row][0];
-
-        Piece *king_dest = &board[row][2];
-        Piece *rook_dest = &board[row][3];
-
-        (*king_dest) = (*king); // switch king to col 2
-        (*rook_dest) = (*rook); // switch rook to col 3
-
-        (*king_dest).move_count++;
-        (*rook_dest).move_count++;
-
-        (*king).type = EMPTY; (*king).color = NONE; // set the original king to empty
-        (*rook).type = EMPTY; (*rook).color = NONE; // set the original rook to empty
-    }
-}
-
 void findKing(Piece board[8][8], Color turn, int *king_x, int *king_y){
     int kingfound = 0;
     for (int y = 0; y<8; y++){
@@ -296,8 +234,65 @@ int hasLegalMoves(Piece board[8][8], Color turn)
 
 }
 
+void applyMove(Move move, Piece board[8][8], Color turn) 
+{
+    if(move.type == NORMAL)
+    {
+        // move the piece by making the destination piece equal to the source piece and setting the source piece into EMPTY
+        Piece *piece = &board[move.piece_row][move.piece_column]; 
+        Piece *destination = &board[move.destination_row][move.destination_column];
+
+        (*destination) = (*piece); // place the piece into its destination
+        (*destination).move_count++; // increment since the piece has moved
+
+        // set the original piece into nothing since it has already moved
+        (*piece).type = EMPTY;        
+        (*piece).color = NONE;
+        
+    }
+    else if(move.type == CASTLE_KINGSIDE)
+    {      
+       int row = turn == WHITE?7:0;
+
+        Piece *king = &board[row][4];
+        Piece *rook = &board[row][7];
+        Piece *king_dest = &board[row][6];
+        Piece *rook_dest = &board[row][5];
+
+        (*king_dest) = (*king); // switch king to col 6
+        (*rook_dest) = (*rook); // switch rook to col 5
+
+        (*king_dest).move_count++;
+        (*rook_dest).move_count++;
+
+        (*king).type = EMPTY; (*king).color = NONE; // set the original king to empty
+        (*rook).type = EMPTY; (*rook).color = NONE; // set the original rook to empty
+
+    }
+    else if(move.type == CASTLE_QUEENSIDE)
+    {
+        int row = turn == WHITE?7:0;
+
+        Piece *king = &board[row][4];
+        Piece *rook = &board[row][0];
+
+        Piece *king_dest = &board[row][2];
+        Piece *rook_dest = &board[row][3];
+
+        (*king_dest) = (*king); // switch king to col 2
+        (*rook_dest) = (*rook); // switch rook to col 3
+
+        (*king_dest).move_count++;
+        (*rook_dest).move_count++;
+
+        (*king).type = EMPTY; (*king).color = NONE; // set the original king to empty
+        (*rook).type = EMPTY; (*rook).color = NONE; // set the original rook to empty
+    }
+}
+
 void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
 {
+    int total_move_count = 0;
     Color turn = WHITE;
     Move move;
     int inCheck;
@@ -319,6 +314,12 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
         
         currentBoard(board, previousBoard);
         applyMove(move, board, turn);
+        if(enPassant(previousBoard,move,turn)){ 
+            //moved the enpassant checking again here to avoid bugs cause by haslegalmoves calling enpassant and removing the piece on the left
+            Piece *behind_piece = &board[move.piece_row][move.destination_column];
+            (*behind_piece).type = EMPTY;
+            (*behind_piece).color = NONE;
+        }
         if (isCheck(board, turn)){
             printf(ORANGE);
             printf("Illegal move, try again.\n");
@@ -326,8 +327,10 @@ void gameLoop(Piece board[8][8], Piece previousBoard[8][8])
             revertBoard(board, previousBoard);
             continue;
         }
+        
 
         pawnPromotion(board, move, turn);
+        total_move_count++;
        
 
         turn = (turn == WHITE)? BLACK : WHITE;
